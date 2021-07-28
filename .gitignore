@@ -45,3 +45,9 @@ Thumbs.db
 *.flv
 *.mov
 *.wmv
+
+# User settings
+xcuserdata/
+
+build/
+DerivedData/
