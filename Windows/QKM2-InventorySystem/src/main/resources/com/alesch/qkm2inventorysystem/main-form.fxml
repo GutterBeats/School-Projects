@@ -29,7 +29,7 @@
                         <Font name="System Bold" size="14.0" />
                     </font>
                 </Label>
-                <TextField HBox.hgrow="ALWAYS" />
+                <TextField promptText="Search by Part ID or Name" HBox.hgrow="ALWAYS" />
                 <padding>
                     <Insets bottom="2.0" left="20.0" right="20.0" />
                 </padding>
@@ -45,16 +45,15 @@
                     </columns>
                 </TableView>
             </HBox>
-            <HBox alignment="BOTTOM_RIGHT" prefHeight="60.0" prefWidth="200.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-                <children>
-                    <Button mnemonicParsing="false" text="Button" />
-                    <Button mnemonicParsing="false" text="Button" />
-                    <Button mnemonicParsing="false" text="Button" />
-                </children>
+            <HBox alignment="BOTTOM_RIGHT" prefHeight="60.0" prefWidth="200.0" spacing="20.0"
+                  AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                 <padding>
-                    <Insets bottom="20.0" right="30.0" />
+                    <Insets bottom="20.0" right="30.0"/>
                 </padding>
-        </HBox>
+                <Button mnemonicParsing="false" text="Button"/>
+                <Button mnemonicParsing="false" text="Button"/>
+                <Button mnemonicParsing="false" text="Button"/>
+            </HBox>
         </AnchorPane>
         <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: #000000; -fx-border-radius: 20; -fx-border-width: 2;" HBox.hgrow="ALWAYS">
             <HBox alignment="BOTTOM_RIGHT" prefHeight="60.0" prefWidth="556.0" spacing="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -63,7 +62,7 @@
                         <Font name="System Bold" size="14.0" />
                     </font>
                 </Label>
-                <TextField HBox.hgrow="ALWAYS" />
+                <TextField promptText="Search by Product ID or Name" HBox.hgrow="ALWAYS" />
                 <padding>
                     <Insets bottom="2.0" left="20.0" right="20.0" />
                 </padding>
@@ -79,15 +78,14 @@
                     </columns>
                 </TableView>
             </HBox>
-            <HBox alignment="BOTTOM_RIGHT" prefHeight="60.0" prefWidth="200.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-                <children>
-                    <Button mnemonicParsing="false" text="Button" />
-                    <Button mnemonicParsing="false" text="Button" />
-                    <Button mnemonicParsing="false" text="Button" />
-                </children>
+            <HBox alignment="BOTTOM_RIGHT" prefHeight="60.0" prefWidth="200.0" spacing="20.0"
+                  AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                 <padding>
-                    <Insets bottom="20.0" right="30.0" />
+                    <Insets bottom="20.0" right="30.0"/>
                 </padding>
+                <Button mnemonicParsing="false" text="Button"/>
+                <Button mnemonicParsing="false" text="Button"/>
+                <Button mnemonicParsing="false" text="Button"/>
             </HBox>
         </AnchorPane>
     </HBox>
