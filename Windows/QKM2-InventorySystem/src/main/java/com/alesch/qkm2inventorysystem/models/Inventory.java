@@ -7,6 +7,8 @@ package com.alesch.qkm2inventorysystem.models;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.Locale;
+
 public final class Inventory {
     private static final ObservableList<Part> allParts;
     private static final ObservableList<Product> allProducts;
@@ -69,7 +71,7 @@ public final class Inventory {
      * @return An ObservableList of Part objects that match the given part name.
      */
     public static ObservableList<Part> lookupPart(String partName) {
-        return allParts.filtered(part -> part.getName().startsWith(partName));
+        return allParts.filtered(part -> part.getName().toLowerCase(Locale.ROOT).contains(partName.toLowerCase(Locale.ROOT)));
     }
 
     /**
@@ -98,7 +100,7 @@ public final class Inventory {
      * @return An ObservableList of Product objects that match the given product name.
      */
     public static ObservableList<Product> lookupProduct(String productName) {
-        return allProducts.filtered(product -> product.getName().startsWith(productName));
+        return allProducts.filtered(product -> product.getName().toLowerCase(Locale.ROOT).contains(productName.toLowerCase(Locale.ROOT)));
     }
 
     /**

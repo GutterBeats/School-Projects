@@ -1,11 +1,12 @@
-/*
- * Copyright (c) 2021 Anthony Chavez.
- */
-
 package com.alesch.qkm2inventorysystem.models;
 
 /**
- * Abstract class used to define different Parts.
+ * Supplied class Part.java
+ */
+
+/**
+ *
+ * @author Anthony Chavez
  */
 public abstract class Part {
     private int id;
@@ -14,16 +15,6 @@ public abstract class Part {
     private int stock;
     private int min;
     private int max;
-
-    /**
-     * Creates new Part object using the specified inputs.
-     * @param id The ID of the Part.
-     * @param name The Name of the Part.
-     * @param price The Price of the Part.
-     * @param stock The amount of Stock available for the Part.
-     * @param min The Minimum amount of stock to keep on hand for the Part.
-     * @param max The Maximum amount of stock to keep on hand for the Part.
-     */
     public Part(int id, String name, double price, int stock, int min, int max) {
         this.id = id;
         this.name = name;
@@ -34,96 +25,84 @@ public abstract class Part {
     }
 
     /**
-     * Get the Part ID.
-     * @return The Part ID
+     * @return the id
      */
     public int getId() {
         return id;
     }
 
     /**
-     * Set the Part ID.
-     * @param id Sets the Part ID
+     * @param id the id to set
      */
     public void setId(int id) {
         this.id = id;
     }
 
     /**
-     * Get the Name of the Part.
-     * @return The Name of the Part
+     * @return the name
      */
     public String getName() {
         return name;
     }
 
     /**
-     * Set the Name of the Part.
-     * @param name The Name of the Part
+     * @param name the name to set
      */
     public void setName(String name) {
         this.name = name;
     }
 
     /**
-     * Get the Price of the Part.
-     * @return The Price
+     * @return the price
      */
     public double getPrice() {
         return price;
     }
 
     /**
-     * Set the Price of the Part.
-     * @param price The Price to set
+     * @param price the price to set
      */
     public void setPrice(double price) {
         this.price = price;
     }
 
     /**
-     * Get the amount of the Part in Stock.
-     * @return The Stock
+     * @return the stock
      */
     public int getStock() {
         return stock;
     }
 
     /**
-     * Set how much of the Part is in Stock.
-     * @param stock The Stock to set
+     * @param stock the stock to set
      */
     public void setStock(int stock) {
         this.stock = stock;
     }
 
     /**
-     * Get the Minimum amount of the Part to keep in stock.
-     * @return The Minimum
+     * @return the min
      */
     public int getMin() {
         return min;
     }
 
     /**
-     * Set the Minimum amount of the Part to keep in stock.
-     * @param min The Minimum to set
+     * @param min the min to set
      */
     public void setMin(int min) {
         this.min = min;
     }
 
     /**
-     * Get the Maximum amount of the Part to keep in stock.
-     * @return The Maximum
+     * @return the max
      */
     public int getMax() {
         return max;
     }
 
     /**
-     * Set the Maximum amount of the Part to keep in stock.
-     * @param max The Maximum to set
+     * @param max the max to set
      */
     public void setMax(int max) {
         this.max = max;
