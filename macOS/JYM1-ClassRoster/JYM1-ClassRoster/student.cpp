@@ -15,8 +15,7 @@ Student::Student() {
     this->emailAddress = "NoEmail";
     this->age = -1;
     
-    for (int i = 0; i < classCount; i++)
-    {
+    for (int i = 0; i < classCount; i++) {
         this->daysToCompleteCourses[i] = -1;
     }
     
@@ -30,8 +29,7 @@ Student::Student(std::string id, std::string firstName, std::string lastName, st
     this->emailAddress = email;
     this->age = age;
     
-    for (int i = 0; i < classCount; i++)
-    {
+    for (int i = 0; i < classCount; i++) {
         this->daysToCompleteCourses[i] = days[i];
     }
     
