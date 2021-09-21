@@ -65,15 +65,15 @@ void Roster::add(std::string studentID, std::string firstName, std::string lastN
     bool studentAdded = false;
     
     for (int i = 0; i < rosterSize; i++) {
-        auto student = classRosterArray[i];
+        Student* student = classRosterArray[i];
+
+        if (student != nullptr) continue;
         
-        if (student == NULL) {
-            studentAdded = true;
-            
-            classRosterArray[i] = new Student(studentID, firstName, lastName, emailAddress, age, courseDays, degreeProgram);
-            
-            break;
-        }
+        studentAdded = true;
+
+        classRosterArray[i] = new Student(studentID, firstName, lastName, emailAddress, age, courseDays, degreeProgram);
+
+        break;
     }
     
     if (!studentAdded) {
@@ -85,17 +85,18 @@ void Roster::remove(std::string studentID) {
     bool studentFound = false;
     
     for (int i = 0; i < rosterSize; i++) {
-        Student * student = classRosterArray[i];
+        Student* student = classRosterArray[i];
+
+        if (student == nullptr) continue;
+        if (student->getID() != studentID) continue;
         
-        if (student != NULL && student->getID() == studentID) {
-            studentFound = true;
-            
-            delete student;
-            
-            classRosterArray[i] = nullptr;
-            
-            break;
-        }
+        studentFound = true;
+
+        delete student;
+
+        classRosterArray[i] = nullptr;
+
+        break;
     }
     
     if (!studentFound) {
@@ -105,7 +106,7 @@ void Roster::remove(std::string studentID) {
 
 void Roster::printAverageDaysInCourse(std::string studentID) {
     Student * student = findStudentByID(studentID);
-    if (student == NULL) return;
+    if (student == nullptr) return;
     
     double total = 0;
     auto days = student->getDaysToCompleteCourse();
@@ -121,9 +122,9 @@ void Roster::printAverageDaysInCourse(std::string studentID) {
 
 void Roster::printInvalidEmails() {
     for (int i = 0; i < rosterSize; i++) {
-        Student * student = classRosterArray[i];
+        Student* student = classRosterArray[i];
         
-        if (student == NULL) continue;
+        if (student == nullptr) continue;
         
         std::string emailAddress = student->getEmailAddress();
         
@@ -135,9 +136,11 @@ void Roster::printInvalidEmails() {
 
 void Roster::printByDegreeProgram(DegreeProgram degreeProgram) {
     for (int i = 0; i < rosterSize; i++) {
-        Student * student = classRosterArray[i];
+        Student* student = classRosterArray[i];
+
+        if (student == nullptr) continue;
         
-        if (student != NULL && student->getDegreeProgram() == degreeProgram) {
+        if (student->getDegreeProgram() == degreeProgram) {
             student->print();
         }
     }
@@ -145,9 +148,9 @@ void Roster::printByDegreeProgram(DegreeProgram degreeProgram) {
 
 void Roster::printAll() {
     for (int i = 0; i < rosterSize; i++) {
-        Student * student = classRosterArray[i];
+        Student* student = classRosterArray[i];
         
-        if (student == NULL) continue;
+        if (student == nullptr) continue;
         
         student->print();
     }
@@ -181,9 +184,5 @@ bool Roster::isValidEmail(std::string emailAddress) {
         return false;
     }
     
-    if (emailAddress.find('.', atPosition) == std::string::npos) {
-        return false;
-    }
-    
-    return true;
+    return emailAddress.find('.', atPosition) != std::string::npos;
 }
