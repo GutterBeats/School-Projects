@@ -8,7 +8,7 @@
 #include <iostream>
 #include "roster.h"
 
-const string studentData[] = {
+const std::string studentData[] = {
     "A1,John,Smith,John1989@gm ail.com,20,30,35,40,SECURITY",
     "A2,Suzan,Erickson,Erickson_1990@gmailcom,19,50,30,40,NETWORK",
     "A3,Jack,Napoli,The_lawyer99yahoo.com,19,20,40,33,SOFTWARE",
@@ -18,10 +18,10 @@ const string studentData[] = {
 
 int main(int argc, const char * argv[]) {
     
-    cout << "Course Title: SCRIPTING AND PROGRAMMING - APPLICATIONS — C867" << endl;
-    cout << "Language: C++" << endl;
-    cout << "Student ID: 000926747" << endl;
-    cout << "Student Name: Anthony Chavez" << endl;
+    std::cout << "Course Title: SCRIPTING AND PROGRAMMING - APPLICATIONS — C867" << std::endl;
+    std::cout << "Language: C++" << std::endl;
+    std::cout << "Student ID: 000926747" << std::endl;
+    std::cout << "Student Name: Anthony Chavez" << std::endl;
     
     Roster classRoster;
     
@@ -29,13 +29,13 @@ int main(int argc, const char * argv[]) {
         classRoster.parse(studentData[i]);
     }
     
-    cout << endl << "Printing All Student Information" << endl;
+    std::cout << std::endl << "Printing All Student Information" << std::endl;
     classRoster.printAll();
     
-    cout << endl << "Printing All Invalid Emails" << endl;
+    std::cout << std::endl << "Printing All Invalid Emails" << std::endl;
     classRoster.printInvalidEmails();
     
-    cout << endl << "Printing Average Days in Course for Students" << endl;
+    std::cout << std::endl << "Printing Average Days in Course for Students" << std::endl;
     for (int i = 0; i < Roster::rosterSize; i++) {
         Student * student = classRoster.classRosterArray[i];
         
@@ -44,16 +44,16 @@ int main(int argc, const char * argv[]) {
         }
     }
     
-    cout << endl << "Printing All Students in the SOFTWARE Degree Program" << endl;
+    std::cout << std::endl << "Printing All Students in the SOFTWARE Degree Program" << std::endl;
     classRoster.printByDegreeProgram(SOFTWARE);
     
-    cout << endl << "Removing Student with ID: A3" << endl;
+    std::cout << std::endl << "Removing Student with ID: A3" << std::endl;
     classRoster.remove("A3");
     
-    cout << endl << "Printing All Student Information" << endl;
+    std::cout << std::endl << "Printing All Student Information" << std::endl;
     classRoster.printAll();
     
-    cout << endl << "Removing Student with ID: A3" << endl;
+    std::cout << std::endl << "Removing Student with ID: A3" << std::endl;
     classRoster.remove("A3");
     
     return 0;

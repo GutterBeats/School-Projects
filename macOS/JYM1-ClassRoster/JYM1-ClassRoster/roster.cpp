@@ -20,22 +20,22 @@ Roster::~Roster() {
     }
 }
 
-void Roster::parse(string studentData) {
+void Roster::parse(std::string studentData) {
     
     auto firstIndex = studentData.find(',');
-    string id = studentData.substr(0, firstIndex);
+    std::string id = studentData.substr(0, firstIndex);
     
     auto secondIndex = firstIndex + 1;
     firstIndex = studentData.find(',', secondIndex);
-    string firstName = studentData.substr(secondIndex, firstIndex - secondIndex);
+    std::string firstName = studentData.substr(secondIndex, firstIndex - secondIndex);
     
     secondIndex = firstIndex + 1;
     firstIndex = studentData.find(',', secondIndex);
-    string lastName = studentData.substr(secondIndex, firstIndex - secondIndex);
+    std::string lastName = studentData.substr(secondIndex, firstIndex - secondIndex);
     
     secondIndex = firstIndex + 1;
     firstIndex = studentData.find(',', secondIndex);
-    string emailAddress = studentData.substr(secondIndex, firstIndex - secondIndex);
+    std::string emailAddress = studentData.substr(secondIndex, firstIndex - secondIndex);
     
     secondIndex = firstIndex + 1;
     firstIndex = studentData.find(',', secondIndex);
@@ -60,7 +60,7 @@ void Roster::parse(string studentData) {
     add(id, firstName, lastName, emailAddress, age, courseOne, courseTwo, courseThree, degree);
 }
 
-void Roster::add(string studentID, string firstName, string lastName, string emailAddress, int age, int daysInCourse1, int daysInCourse2, int daysInCourse3, DegreeProgram degreeProgram) {
+void Roster::add(std::string studentID, std::string firstName, std::string lastName, std::string emailAddress, int age, int daysInCourse1, int daysInCourse2, int daysInCourse3, DegreeProgram degreeProgram) {
     int courseDays[3] = { daysInCourse1, daysInCourse2, daysInCourse3 };
     bool studentAdded = false;
     
@@ -77,11 +77,11 @@ void Roster::add(string studentID, string firstName, string lastName, string ema
     }
     
     if (!studentAdded) {
-        cout << "The class is all full! Try again next semester." << endl;
+        std::cout << "The class is all full! Try again next semester." << std::endl;
     }
 }
 
-void Roster::remove(string studentID) {
+void Roster::remove(std::string studentID) {
     bool studentFound = false;
     
     for (int i = 0; i < rosterSize; i++) {
@@ -99,11 +99,11 @@ void Roster::remove(string studentID) {
     }
     
     if (!studentFound) {
-        cout << "Student with ID: " << studentID << " was not found." << endl;
+        std::cout << "Student with ID: " << studentID << " was not found." << std::endl;
     }
 }
 
-void Roster::printAverageDaysInCourse(string studentID) {
+void Roster::printAverageDaysInCourse(std::string studentID) {
     Student * student = findStudentByID(studentID);
     if (student == NULL) return;
     
@@ -116,7 +116,7 @@ void Roster::printAverageDaysInCourse(string studentID) {
     
     double average = total / static_cast<double>(Student::classCount);
     
-    cout << "Average Days in Course for Student " << student->getID() << ": " << average << endl;
+    std::cout << "Average Days in Course for Student " << student->getID() << ": " << average << std::endl;
 }
 
 void Roster::printInvalidEmails() {
@@ -125,10 +125,10 @@ void Roster::printInvalidEmails() {
         
         if (student == NULL) continue;
         
-        string emailAddress = student->getEmailAddress();
+        std::string emailAddress = student->getEmailAddress();
         
         if (!isValidEmail(emailAddress)) {
-            cout << "Invalid email address found for Student " << student->getID() << ": " << emailAddress << endl;
+            std::cout << "Invalid email address found for Student " << student->getID() << ": " << emailAddress << std::endl;
         }
     }
 }
@@ -154,11 +154,11 @@ void Roster::printAll() {
 }
 
 // Utility Functions
-Student * Roster::findStudentByID(string studentID) {
+Student* Roster::findStudentByID(std::string studentID) {
     for (int i = 0; i < rosterSize; i++) {
-        Student * student = classRosterArray[i];
+        Student* student = classRosterArray[i];
         
-        if (student == NULL) continue;
+        if (student == nullptr) continue;
         
         if (student->getID() == studentID) {
             return student;
@@ -168,20 +168,20 @@ Student * Roster::findStudentByID(string studentID) {
     return nullptr;
 }
 
-bool Roster::isValidEmail(string emailAddress) {
+bool Roster::isValidEmail(std::string emailAddress) {
     // A valid email should include an at sign ('@') and period ('.') and should not include a space (' ')
     
-    if (emailAddress.find(' ') != string::npos) {
+    if (emailAddress.find(' ') != std::string::npos) {
         return false;
     }
     
     auto atPosition = emailAddress.find('@');
     
-    if (atPosition == string::npos) {
+    if (atPosition == std::string::npos) {
         return false;
     }
     
-    if (emailAddress.find('.', atPosition) == string::npos) {
+    if (emailAddress.find('.', atPosition) == std::string::npos) {
         return false;
     }
     

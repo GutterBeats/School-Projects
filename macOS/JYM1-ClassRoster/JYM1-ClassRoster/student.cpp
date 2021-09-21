@@ -23,7 +23,7 @@ Student::Student() {
     this->degreeProgram = SECURITY;
 }
 
-Student::Student(string id, string firstName, string lastName, string email, int age, int days[], DegreeProgram program) {
+Student::Student(std::string id, std::string firstName, std::string lastName, std::string email, int age, int days[], DegreeProgram program) {
     this->id = id;
     this->firstName = firstName;
     this->lastName = lastName;
@@ -48,35 +48,35 @@ void Student::setDegreeProgram(DegreeProgram program) {
     this->degreeProgram = program;
 }
 
-string Student::getFirstName() const {
+std::string Student::getFirstName() const {
     return this->firstName;
 }
 
-void Student::setFirstName(string name) {
+void Student::setFirstName(std::string name) {
     this->firstName = name;
 }
 
-string Student::getLastName() const {
+std::string Student::getLastName() const {
     return this->lastName;
 }
 
-void Student::setLastName(string name) {
+void Student::setLastName(std::string name) {
     this->lastName = name;
 }
 
-string Student::getEmailAddress() const {
+std::string Student::getEmailAddress() const {
     return this->emailAddress;
 }
 
-void Student::setEmailAddress(string email) {
+void Student::setEmailAddress(std::string email) {
     this->emailAddress = email;
 }
 
-string Student::getID() const {
+std::string Student::getID() const {
     return this->id;
 }
 
-void Student::setID(string id) {
+void Student::setID(std::string id) {
     this->id = id;
 }
 
@@ -99,20 +99,20 @@ void Student::setDaysToCompleteCourse(int days[]) {
 }
 
 void Student::print() {
-    cout << getID() << "\t";
-    cout << "First Name: " << getFirstName() << "\t";
-    cout << "Last Name: " << getLastName() << "\t";
-    cout << "Age: " << getAge() << "\t";
-    cout << "Days in Course: { ";
+    std::cout << getID() << "\t";
+    std::cout << "First Name: " << getFirstName() << "\t";
+    std::cout << "Last Name: " << getLastName() << "\t";
+    std::cout << "Age: " << getAge() << "\t";
+    std::cout << "Days in Course: { ";
     
     for (int i = 0; i < classCount; i++) {
-        cout << getDaysToCompleteCourse()[i];
+        std::cout << getDaysToCompleteCourse()[i];
         
         if ((i + 1) != classCount) {
-            cout << ", ";
+            std::cout << ", ";
         }
     }
     
-    cout << " }\t";
-    cout << "Degree Program: " << degreeProgramStrings[getDegreeProgram()] << endl;
+    std::cout << " }\t";
+    std::cout << "Degree Program: " << degreeProgramStrings[getDegreeProgram()] << std::endl;
 }
