@@ -4,6 +4,7 @@
 
 package com.alesch.qkm2inventorysystem.controllers;
 
+import com.alesch.qkm2inventorysystem.InventorySystem;
 import com.alesch.qkm2inventorysystem.models.InHouse;
 import com.alesch.qkm2inventorysystem.models.Inventory;
 import com.alesch.qkm2inventorysystem.models.Part;
@@ -11,22 +12,25 @@ import com.alesch.qkm2inventorysystem.models.Product;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public final class MainFormController {
 
-    private Timer searchTimer = new Timer();
+    private Timer partSearchTimer = new Timer();
+    private Timer productSearchTimer = new Timer();
 
     @FXML
     public TextField partSearchField;
+    public TextField productSearchField;
 
     @FXML
     public TableView<Part> partsTableView;
@@ -91,20 +95,51 @@ public final class MainFormController {
 
     }
 
-    public void partSearchField_KeyTyped(KeyEvent keyEvent) {
-        searchTimer.cancel();
-        searchTimer = new Timer();
+    @FXML
+    private void addProductClicked(ActionEvent actionEvent) {
 
-        searchTimer.schedule(new TimerTask() {
+    }
+
+    @FXML
+    private void modifyProductClicked(ActionEvent actionEvent) {
+
+    }
+
+    @FXML
+    private void deleteProductClicked(ActionEvent actionEvent) {
+
+    }
+
+    @FXML
+    private void partSearchField_KeyTyped(KeyEvent keyEvent) {
+        partSearchTimer.cancel();
+        partSearchTimer = new Timer();
+
+        partSearchTimer.schedule(new TimerTask() {
             @Override
             public void run() {
                 String partName = partSearchField.getText();
-                System.out.println("Searching for..." + partName);
-
                 var items = partName.length() == 0 ? Inventory.getAllParts() : Inventory.lookupPart(partName);
 
                 partsTableView.setItems(items);
-                searchTimer.cancel();
+                partSearchTimer.cancel();
+            }
+        }, 500);
+    }
+
+    @FXML
+    private void productSearchField_KeyTyped(KeyEvent keyEvent) {
+        productSearchTimer.cancel();
+        productSearchTimer = new Timer();
+
+        productSearchTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                String productName = productSearchField.getText();
+                var items = productName.length() == 0 ? Inventory.getAllProducts() : Inventory.lookupProduct(productName);
+
+                productTableView.setItems(items);
+                productSearchTimer.cancel();
             }
         }, 500);
     }
