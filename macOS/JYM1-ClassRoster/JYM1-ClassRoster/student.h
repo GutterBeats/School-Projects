@@ -5,36 +5,34 @@
 //  Created by Anthony Chavez on 9/4/20.
 //
 
-#ifndef student_h
-#define student_h
+#pragma once
 
 #include "degree.h"
 #include <vector>
-using namespace std;
 
 class Student {
     
 public:
     // Constructors / Destructor
     Student();
-    Student(string, string, string, string, int, int[], DegreeProgram);
+    Student(std::string, std::string, std::string, std::string, int, int[], DegreeProgram);
     ~Student();
     
     // Getters
     DegreeProgram getDegreeProgram() const;
-    string getID() const;
-    string getFirstName() const;
-    string getLastName() const;
-    string getEmailAddress() const;
+    std::string getID() const;
+    std::string getFirstName() const;
+    std::string getLastName() const;
+    std::string getEmailAddress() const;
     int getAge() const;
-    int * getDaysToCompleteCourse();
+    int* getDaysToCompleteCourse();
     
     // Setters
     void setDegreeProgram(DegreeProgram);
-    void setFirstName(string);
-    void setLastName(string);
-    void setEmailAddress(string);
-    void setID(string);
+    void setFirstName(std::string);
+    void setLastName(std::string);
+    void setEmailAddress(std::string);
+    void setID(std::string);
     void setAge(int);
     void setDaysToCompleteCourse(int[]);
     
@@ -46,14 +44,12 @@ public:
 private:
     DegreeProgram degreeProgram;
     
-    string id;
-    string firstName;
-    string lastName;
-    string emailAddress;
+    std::string id;
+    std::string firstName;
+    std::string lastName;
+    std::string emailAddress;
     
     int age;
     int daysToCompleteCourses[classCount];
     
 };
-
-#endif /* student_h */

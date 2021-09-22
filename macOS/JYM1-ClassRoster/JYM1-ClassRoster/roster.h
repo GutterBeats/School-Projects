@@ -5,8 +5,7 @@
 //  Created by Anthony Chavez on 9/4/20.
 //
 
-#ifndef roster_h
-#define roster_h
+#pragma once
 
 #include <stdio.h>
 #include "student.h"
@@ -21,18 +20,16 @@ public:
     
     Student * classRosterArray[rosterSize];
     
-    void parse(string);
-    void add(string studentID, string firstName, string lastName, string emailAddress, int age, int daysInCourse1, int daysInCourse2, int daysInCourse3, DegreeProgram degreeProgram);
-    void remove(string studentID);
-    void printAverageDaysInCourse(string studentID);
+    void parse(std::string);
+    void add(std::string studentID, std::string firstName, std::string lastName, std::string emailAddress, int age, int daysInCourse1, int daysInCourse2, int daysInCourse3, DegreeProgram degreeProgram);
+    void remove(std::string studentID);
+    void printAverageDaysInCourse(std::string studentID);
     void printInvalidEmails();
     void printByDegreeProgram(DegreeProgram degreeProgram);
     void printAll();
     
 private:
-    Student * findStudentByID(string studentID);
-    bool isValidEmail(string emailAddress);
+    Student* findStudentByID(std::string studentID);
+    bool isValidEmail(std::string emailAddress);
     
 };
-
-#endif /* roster_h */
