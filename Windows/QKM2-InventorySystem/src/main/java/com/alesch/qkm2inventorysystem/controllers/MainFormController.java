@@ -71,6 +71,9 @@ public final class MainFormController {
         productInventory.setCellValueFactory(new PropertyValueFactory<>("stock"));
         productPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
 
+        Inventory.addProduct(new Product(1000, "Giant Bike", 299.99, 5, 1, 5));
+        Inventory.addProduct(new Product(1001, "Tricycle", 99.99, 3, 1, 5));
+
         productTableView.setItems(Inventory.getAllProducts());
         productTableView.setPlaceholder(new Label("No Products Available"));
     }
@@ -82,7 +85,18 @@ public final class MainFormController {
 
     @FXML
     private void addPartsClicked(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(InventorySystem.class.getResource("part-detail-form.fxml")));
 
+            Stage stage = new Stage();
+            Scene scene = new Scene(loader.load());
+            stage.setScene(scene);
+            stage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage());
+            alert.showAndWait();
+        }
     }
 
     @FXML
