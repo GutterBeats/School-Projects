@@ -8,17 +8,15 @@ import com.alesch.qkm2inventorysystem.models.Part;
 
 public class PartDetailFormController {
 
-    private final Part part;
-
-    public PartDetailFormController() {
-        part = null;
-    }
-
-    public PartDetailFormController(Part part) {
-        this.part = part;
-    }
+    private Part part;
 
     public void initialize() {
+        if (part == null) return;
 
+
+    }
+
+    public void setPart(Part part) {
+        this.part = part;
     }
 }

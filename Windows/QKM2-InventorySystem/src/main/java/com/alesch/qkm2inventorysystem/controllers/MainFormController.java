@@ -102,7 +102,24 @@ public final class MainFormController {
 
     @FXML
     private void modifyPartsClicked(ActionEvent actionEvent) {
+        try {
+            Part selectedPart = partsTableView.getSelectionModel().getSelectedItem();
+            if (selectedPart == null) {
+                showErrorText("Please select a part to modify.");
+                return;
+            }
 
+            FXMLLoader loader = getLoader("part-detail-form.fxml");
+            Parent parent = loader.load();
+
+            PartDetailFormController controller = loader.getController();
+            controller.setPart(selectedPart);
+
+            showStage(parent);
+        }
+        catch (Exception e) {
+            handleException(e);
+        }
     }
 
     @FXML
