@@ -122,10 +122,15 @@
         <padding>
             <Insets left="20.0" right="50.0" />
         </padding>
-        <Button mnemonicParsing="false" onMouseClicked="#exitButtonClicked" text="Exit">
-            <font>
-                <Font size="14.0" />
-            </font>
-        </Button>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+         <children>
+            <Label fx:id="errorLabel" AnchorPane.leftAnchor="0.0" />
+              <Button mnemonicParsing="false" onMouseClicked="#exitButtonClicked" text="Exit" AnchorPane.rightAnchor="0.0">
+                  <font>
+                      <Font size="14.0" />
+                  </font>
+              </Button>
+         </children>
+      </AnchorPane>
     </HBox>
 </VBox>

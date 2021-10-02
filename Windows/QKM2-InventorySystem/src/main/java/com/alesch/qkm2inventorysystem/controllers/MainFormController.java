@@ -46,6 +46,9 @@ public final class MainFormController {
     public TableColumn productInventory;
     public TableColumn productPrice;
 
+    @FXML
+    private Label errorLabel;
+
     public void initialize() {
         initializePartsTable();
         initializeProductsTable();
@@ -156,5 +159,16 @@ public final class MainFormController {
                 productSearchTimer.cancel();
             }
         }, 500);
+    }
+
+    private void showErrorText(String message) {
+        errorLabel.setText(message);
+
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() -> errorLabel.setText(""));
+            }
+        }, 5000);
     }
 }
