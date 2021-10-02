@@ -94,6 +94,7 @@ public final class MainFormController {
     private void addPartsClicked(ActionEvent actionEvent) {
         try {
             FXMLLoader loader = getLoader("part-detail-form.fxml");
+            loader.setController(new PartDetailFormController());
             showStage(loader.load());
         } catch (Exception e) {
             handleException(e);
@@ -110,12 +111,9 @@ public final class MainFormController {
             }
 
             FXMLLoader loader = getLoader("part-detail-form.fxml");
-            Parent parent = loader.load();
+            loader.setController(new PartDetailFormController(selectedPart));
 
-            PartDetailFormController controller = loader.getController();
-            controller.setPart(selectedPart);
-
-            showStage(parent);
+            showStage(loader.load());
         }
         catch (Exception e) {
             handleException(e);
