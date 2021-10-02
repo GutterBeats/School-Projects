@@ -107,7 +107,29 @@ public final class MainFormController {
 
     @FXML
     private void deletePartsClicked(ActionEvent actionEvent) {
+        ObservableList<Part> selectedParts = partsTableView.getSelectionModel().getSelectedItems();
 
+        if (selectedParts.isEmpty()) {
+            showErrorText("Please select a part to delete.");
+            return;
+        }
+
+        StringBuilder builder = new StringBuilder("Are you sure you want to delete the following part(s)?")
+                .append(System.lineSeparator())
+                .append(System.lineSeparator());
+
+        for (Part selectedPart : selectedParts) {
+            builder.append(selectedPart.getName()).append(System.lineSeparator());
+        }
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, builder.toString(), ButtonType.YES, ButtonType.NO);
+        alert.showAndWait().ifPresent(response -> {
+            if (response != ButtonType.YES) return;
+
+            for (Part selectedPart : selectedParts) {
+                Inventory.deletePart(selectedPart);
+            }
+        });
     }
 
     @FXML
@@ -122,7 +144,29 @@ public final class MainFormController {
 
     @FXML
     private void deleteProductClicked(ActionEvent actionEvent) {
+        ObservableList<Product> selectedProducts = productTableView.getSelectionModel().getSelectedItems();
 
+        if (selectedProducts.isEmpty()) {
+            showErrorText("Please select a product to delete.");
+            return;
+        }
+
+        StringBuilder builder = new StringBuilder("Are you sure you want to delete the following product(s)?")
+                .append(System.lineSeparator())
+                .append(System.lineSeparator());
+
+        for (Product selectedProduct : selectedProducts) {
+            builder.append(selectedProduct.getName()).append(System.lineSeparator());
+        }
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, builder.toString(), ButtonType.YES, ButtonType.NO);
+        alert.showAndWait().ifPresent(response -> {
+            if (response != ButtonType.YES) return;
+
+            for (Product selectedProduct : selectedProducts) {
+                Inventory.deleteProduct(selectedProduct);
+            }
+        });
     }
 
     @FXML
@@ -150,7 +194,7 @@ public final class MainFormController {
         productSearchTimer.schedule(new TimerTask() {
             @Override
             public void run() {
-                String productName = productSearchField.getText();
+                String productName = productSearchField.getText().trim();
                 var items = productName.length() == 0 ? Inventory.getAllProducts() : Inventory.lookupProduct(productName);
 
                 productTableView.setItems(items);
