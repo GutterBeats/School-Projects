@@ -10,15 +10,19 @@ import com.alesch.qkm2inventorysystem.models.Inventory;
 import com.alesch.qkm2inventorysystem.models.Part;
 import com.alesch.qkm2inventorysystem.models.Product;
 
+import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -89,16 +93,10 @@ public final class MainFormController {
     @FXML
     private void addPartsClicked(ActionEvent actionEvent) {
         try {
-            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(InventorySystem.class.getResource("part-detail-form.fxml")));
-
-            Stage stage = new Stage();
-            Scene scene = new Scene(loader.load());
-            stage.setScene(scene);
-            stage.showAndWait();
+            FXMLLoader loader = getLoader("part-detail-form.fxml");
+            showStage(loader.load());
         } catch (Exception e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage());
-            alert.showAndWait();
+            handleException(e);
         }
     }
 
@@ -159,6 +157,25 @@ public final class MainFormController {
                 productSearchTimer.cancel();
             }
         }, 500);
+    }
+
+    private void handleException(Exception e) {
+        e.printStackTrace();
+
+        Alert alert = new Alert(Alert.AlertType.ERROR, e.getLocalizedMessage());
+        alert.showAndWait();
+    }
+
+    private FXMLLoader getLoader(String resourceFile) {
+        return new FXMLLoader(Objects.requireNonNull(InventorySystem.class.getResource(resourceFile)));
+    }
+
+    private void showStage(Parent parent) {
+        Stage stage = new Stage();
+        Scene scene = new Scene(parent);
+
+        stage.setScene(scene);
+        stage.showAndWait();
     }
 
     private void showErrorText(String message) {
