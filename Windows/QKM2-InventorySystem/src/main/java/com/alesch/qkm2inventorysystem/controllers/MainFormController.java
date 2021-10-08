@@ -29,9 +29,14 @@ import java.util.TimerTask;
 
 public final class MainFormController {
 
+    //<editor-fold desc="Fields">
+
     private Timer partSearchTimer = new Timer();
     private Timer productSearchTimer = new Timer();
 
+    //</editor-fold>
+
+    //<editor-fold desc="FXML Control Declarations">
     @FXML
     private TextField partSearchField;
 
@@ -70,6 +75,9 @@ public final class MainFormController {
 
     @FXML
     private Label errorLabel;
+    //</editor-fold>
+
+    //<editor-fold desc="FXML Initialize">
 
     public void initialize() {
         initializePartsTable();
@@ -102,6 +110,10 @@ public final class MainFormController {
         productTableView.setItems(Inventory.getAllProducts());
         productTableView.setPlaceholder(new Label("No Products Available"));
     }
+
+    //</editor-fold>
+
+    //<editor-fold desc="FXML Event Handlers">
 
     @FXML
     private void exitButtonClicked() {
@@ -236,6 +248,10 @@ public final class MainFormController {
         }, 500);
     }
 
+    //</editor-fold>
+
+    //<editor-fold desc="Helpers">
+
     private void handleException(Exception e) {
         e.printStackTrace();
 
@@ -265,4 +281,6 @@ public final class MainFormController {
             }
         }, 5000);
     }
+
+    //</editor-fold>
 }
