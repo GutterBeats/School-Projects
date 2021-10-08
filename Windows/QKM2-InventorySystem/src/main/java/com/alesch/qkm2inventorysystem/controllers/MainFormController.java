@@ -33,22 +33,40 @@ public final class MainFormController {
     private Timer productSearchTimer = new Timer();
 
     @FXML
-    public TextField partSearchField;
-    public TextField productSearchField;
+    private TextField partSearchField;
 
     @FXML
-    public TableView<Part> partsTableView;
-    public TableColumn partId;
-    public TableColumn partName;
-    public TableColumn partInventory;
-    public TableColumn partPrice;
+    private TextField productSearchField;
 
     @FXML
-    public TableView<Product> productTableView;
-    public TableColumn productId;
-    public TableColumn productName;
-    public TableColumn productInventory;
-    public TableColumn productPrice;
+    private TableView<Part> partsTableView;
+
+    @FXML
+    private TableColumn partId;
+
+    @FXML
+    private TableColumn partName;
+
+    @FXML
+    private TableColumn partInventory;
+
+    @FXML
+    private TableColumn partPrice;
+
+    @FXML
+    private TableView<Product> productTableView;
+
+    @FXML
+    private TableColumn productId;
+
+    @FXML
+    private TableColumn productName;
+
+    @FXML
+    private TableColumn productInventory;
+
+    @FXML
+    private TableColumn productPrice;
 
     @FXML
     private Label errorLabel;
