@@ -9,7 +9,7 @@
   ~ Copyright (c) 2021 Anthony Chavez.
   -->
 
-<AnchorPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox alignment="CENTER_LEFT" layoutX="107.0" layoutY="31.0" prefHeight="100.0" prefWidth="200.0" spacing="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -18,27 +18,27 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <RadioButton fx:id="inHouseRadioButton" mnemonicParsing="false" text="In-House" />
-            <RadioButton fx:id="outsourcedRadioButton" mnemonicParsing="false" text="Outsourced" />
+            <RadioButton fx:id="inHouseRadioButton" mnemonicParsing="false" onAction="#inHouseRadioButtonSelected" text="In-House" />
+            <RadioButton fx:id="outsourcedRadioButton" mnemonicParsing="false" onAction="#outsourcedRadioButtonSelected" text="Outsourced" />
          </children>
          <padding>
             <Insets left="25.0" right="25.0" />
          </padding>
       </HBox>
-      <GridPane layoutX="100.0" layoutY="100.0" prefHeight="428.0" prefWidth="500.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+      <GridPane hgap="15.0" layoutX="100.0" layoutY="100.0" prefHeight="428.0" prefWidth="500.0" vgap="15.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
         <columnConstraints>
+          <ColumnConstraints halignment="LEFT" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints minHeight="1.0" prefHeight="10.0" valignment="TOP" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="1.0" prefHeight="10.0" valignment="TOP" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="1.0" prefHeight="10.0" valignment="TOP" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="1.0" prefHeight="10.0" valignment="TOP" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="1.0" prefHeight="10.0" valignment="TOP" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="1.0" prefHeight="10.0" valignment="TOP" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="1.0" prefHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="1.0" prefHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="1.0" prefHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="1.0" prefHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="1.0" prefHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="1.0" prefHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Label text="ID">
@@ -65,7 +65,7 @@
                <GridPane.margin>
                   <Insets left="35.0" />
                </GridPane.margin></Label>
-            <Label text="Label" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <Label text="Min" GridPane.columnIndex="2" GridPane.rowIndex="4" />
             <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
@@ -74,6 +74,9 @@
             <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <TextField GridPane.columnIndex="3" GridPane.rowIndex="4" />
          </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
       </GridPane>
       <HBox alignment="CENTER_RIGHT" layoutX="100.0" prefHeight="53.0" prefWidth="500.0" spacing="25.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>

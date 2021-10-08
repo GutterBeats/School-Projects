@@ -5,8 +5,10 @@
 package com.alesch.qkm2inventorysystem.controllers;
 
 import com.alesch.qkm2inventorysystem.models.*;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
 import javafx.stage.Stage;
 
 import java.util.Comparator;
@@ -15,6 +17,12 @@ import java.util.Optional;
 public class PartDetailFormController {
 
     private Part temporaryPart;
+
+    @FXML
+    private RadioButton inHouseRadioButton;
+
+    @FXML
+    private RadioButton outsourcedRadioButton;
 
     @FXML
     private Button cancelButton;
@@ -28,7 +36,22 @@ public class PartDetailFormController {
     }
 
     public void initialize() {
+        if (temporaryPart == null) {
+            temporaryPart = new InHouse(getNextPartId(), "", 0.0, 0, 0, 0, 0);
+        }
 
+        inHouseRadioButton.setSelected(true);
+        outsourcedRadioButton.setSelected(false);
+    }
+
+    @FXML
+    private void inHouseRadioButtonSelected(ActionEvent actionEvent) {
+        outsourcedRadioButton.setSelected(false);
+    }
+
+    @FXML
+    private void outsourcedRadioButtonSelected(ActionEvent actionEvent) {
+        inHouseRadioButton.setSelected(false);
     }
 
     @FXML
