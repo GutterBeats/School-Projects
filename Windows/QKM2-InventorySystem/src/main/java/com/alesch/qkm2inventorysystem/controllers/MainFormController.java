@@ -19,6 +19,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
@@ -125,7 +126,7 @@ public final class MainFormController {
         try {
             FXMLLoader loader = getLoader("part-detail-form.fxml");
             loader.setController(new PartDetailFormController());
-            showStage(loader.load());
+            showStage(loader.load(), getPartImage());
         } catch (Exception e) {
             handleException(e);
         }
@@ -143,7 +144,7 @@ public final class MainFormController {
             FXMLLoader loader = getLoader("part-detail-form.fxml");
             loader.setController(new PartDetailFormController(selectedPart));
 
-            showStage(loader.load());
+            showStage(loader.load(), getPartImage());
         }
         catch (Exception e) {
             handleException(e);
@@ -263,10 +264,11 @@ public final class MainFormController {
         return new FXMLLoader(Objects.requireNonNull(InventorySystem.class.getResource(resourceFile)));
     }
 
-    private void showStage(Parent parent) {
+    private void showStage(Parent parent, Image stageImage) {
         Stage stage = new Stage();
         Scene scene = new Scene(parent);
 
+        stage.getIcons().add(stageImage);
         stage.setScene(scene);
         stage.showAndWait();
     }
@@ -280,6 +282,10 @@ public final class MainFormController {
                 Platform.runLater(() -> errorLabel.setText(""));
             }
         }, 5000);
+    }
+
+    private Image getPartImage() {
+        return new Image(String.valueOf(InventorySystem.class.getResource("images/parts.png")));
     }
 
     //</editor-fold>

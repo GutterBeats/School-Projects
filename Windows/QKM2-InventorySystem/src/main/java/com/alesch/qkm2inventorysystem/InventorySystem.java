@@ -8,6 +8,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -20,6 +21,7 @@ public class InventorySystem extends Application {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("main-form.fxml")));
         Scene scene = new Scene(root);
 
+        stage.getIcons().add(new Image(String.valueOf(getClass().getResource("images/inventory.png"))));
         stage.setTitle("Inventory System");
         stage.setScene(scene);
         stage.show();
