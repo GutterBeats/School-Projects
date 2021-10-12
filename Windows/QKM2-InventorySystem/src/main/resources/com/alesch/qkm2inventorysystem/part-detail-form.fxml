@@ -10,85 +10,87 @@
   -->
 
 <AnchorPane prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <HBox alignment="CENTER_LEFT" layoutX="107.0" layoutY="31.0" prefHeight="100.0" prefWidth="200.0" spacing="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <Label text="Add Part">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <RadioButton fx:id="inHouseRadioButton" mnemonicParsing="false" onAction="#inHouseRadioButtonSelected" text="In-House" />
-            <RadioButton fx:id="outsourcedRadioButton" mnemonicParsing="false" onAction="#outsourcedRadioButtonSelected" text="Outsourced" />
-         </children>
-         <padding>
+    <padding>
+        <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+    </padding>
+    <HBox alignment="CENTER_LEFT" layoutX="107.0" layoutY="31.0" prefHeight="100.0" prefWidth="200.0" spacing="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <padding>
             <Insets left="25.0" right="25.0" />
-         </padding>
-      </HBox>
-      <GridPane hgap="15.0" layoutX="100.0" layoutY="100.0" prefHeight="428.0" prefWidth="500.0" vgap="15.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+        </padding>
+        <Label fx:id="formLabel" text="Add Part">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </Label>
+        <RadioButton fx:id="inHouseRadioButton" mnemonicParsing="false" onAction="#inHouseRadioButtonSelected" selected="true" text="In-House" />
+        <RadioButton fx:id="outsourcedRadioButton" mnemonicParsing="false" onAction="#outsourcedRadioButtonSelected" text="Outsourced" />
+    </HBox>
+    <GridPane hgap="15.0" layoutX="100.0" layoutY="100.0" prefHeight="428.0" prefWidth="500.0" vgap="15.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
         <columnConstraints>
-          <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints minHeight="1.0" prefHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="1.0" prefHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="1.0" prefHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="1.0" prefHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="1.0" prefHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="1.0" prefHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
             <RowConstraints minHeight="1.0" prefHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
             <RowConstraints minHeight="1.0" prefHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
             <RowConstraints minHeight="1.0" prefHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
         </rowConstraints>
-         <children>
-            <Label text="ID">
-               <GridPane.margin>
-                  <Insets left="35.0" />
-               </GridPane.margin></Label>
-            <Label text="Name" GridPane.rowIndex="1">
-               <GridPane.margin>
-                  <Insets left="35.0" />
-               </GridPane.margin></Label>
-            <Label text="Inv" GridPane.rowIndex="2">
-               <GridPane.margin>
-                  <Insets left="35.0" />
-               </GridPane.margin></Label>
-            <Label text="Price/Cost" GridPane.rowIndex="3">
-               <GridPane.margin>
-                  <Insets left="35.0" />
-               </GridPane.margin></Label>
-            <Label text="Max" GridPane.rowIndex="4">
-               <GridPane.margin>
-                  <Insets left="35.0" />
-               </GridPane.margin></Label>
-            <Label fx:id="extraLabel" text="Machine ID" GridPane.rowIndex="5">
-               <GridPane.margin>
-                  <Insets left="35.0" />
-               </GridPane.margin></Label>
-            <Label text="Min" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-            <TextField fx:id="maximumTextField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <TextField fx:id="priceTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField fx:id="inventoryTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="nameTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="idTextField" disable="true" editable="false" GridPane.columnIndex="1" />
-            <TextField fx:id="extraTextField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <TextField fx:id="minimumTextField" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-         </children>
-         <opaqueInsets>
+        <opaqueInsets>
             <Insets />
-         </opaqueInsets>
-      </GridPane>
-      <HBox alignment="CENTER_RIGHT" layoutX="100.0" prefHeight="53.0" prefWidth="500.0" spacing="25.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-         <children>
-            <Button mnemonicParsing="false" onAction="#saveButtonClicked" text="Save" />
-            <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelButtonClicked" text="Cancel" />
-         </children>
-         <padding>
+        </opaqueInsets>
+        <Label text="ID">
+            <GridPane.margin>
+                <Insets left="35.0" />
+            </GridPane.margin>
+        </Label>
+        <TextField fx:id="idTextField" disable="true" editable="false" promptText="Auto Generated" GridPane.columnIndex="1">
+            <font>
+                <Font name="System Bold Italic" size="12.0" />
+            </font>
+        </TextField>
+        <Label text="Name" GridPane.rowIndex="1">
+            <GridPane.margin>
+                <Insets left="35.0" />
+            </GridPane.margin>
+        </Label>
+        <TextField fx:id="nameTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <Label text="Inv" GridPane.rowIndex="2">
+            <GridPane.margin>
+                <Insets left="35.0" />
+            </GridPane.margin>
+        </Label>
+        <TextField fx:id="inventoryTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+        <Label text="Price/Cost" GridPane.rowIndex="3">
+            <GridPane.margin>
+                <Insets left="35.0" />
+            </GridPane.margin>
+        </Label>
+        <TextField fx:id="priceTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+        <Label text="Max" GridPane.rowIndex="4">
+            <GridPane.margin>
+                <Insets left="35.0" />
+            </GridPane.margin>
+        </Label>
+        <TextField fx:id="maximumTextField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+        <Label text="Min" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+        <TextField fx:id="minimumTextField" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+        <Label fx:id="extraLabel" text="Machine ID" GridPane.rowIndex="5">
+            <GridPane.margin>
+                <Insets left="35.0" />
+            </GridPane.margin>
+        </Label>
+        <TextField fx:id="extraTextField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+    </GridPane>
+    <HBox alignment="CENTER_RIGHT" layoutX="100.0" prefHeight="53.0" prefWidth="500.0" spacing="25.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <padding>
             <Insets right="25.0" />
-         </padding>
-      </HBox>
-   </children>
-   <padding>
-      <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
-   </padding>
+        </padding>
+        <Button mnemonicParsing="false" onAction="#saveButtonClicked" text="Save" />
+        <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelButtonClicked" text="Cancel" />
+    </HBox>
 </AnchorPane>
