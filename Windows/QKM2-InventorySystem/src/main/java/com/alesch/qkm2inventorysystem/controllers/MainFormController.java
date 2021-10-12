@@ -122,6 +122,8 @@ public final class MainFormController {
         try {
             FXMLLoader loader = new FXMLLoader(Resources.getPartDetailFormFXML());
             loader.setController(new PartDetailFormController());
+
+            showStage(loader.load(), Resources.getPartImage(), "Add New Part");
         } catch (Exception e) {
             handleException(e);
         }
@@ -140,7 +142,7 @@ public final class MainFormController {
             FXMLLoader loader = new FXMLLoader(Resources.getPartDetailFormFXML());
             loader.setController(new PartDetailFormController(selectedPart.getId()));
 
-            showStage(loader.load(), Resources.getPartImage());
+            showStage(loader.load(), Resources.getPartImage(), "Update " + selectedPart.getName());
         }
         catch (Exception e) {
             handleException(e);
@@ -256,11 +258,12 @@ public final class MainFormController {
         alert.showAndWait();
     }
 
-    private void showStage(Parent parent, Image stageImage) {
+    private void showStage(Parent parent, Image stageImage, String title) {
         Stage stage = new Stage();
         Scene scene = new Scene(parent);
 
         stage.getIcons().add(stageImage);
+        stage.setTitle(title);
         stage.setScene(scene);
         stage.showAndWait();
     }
