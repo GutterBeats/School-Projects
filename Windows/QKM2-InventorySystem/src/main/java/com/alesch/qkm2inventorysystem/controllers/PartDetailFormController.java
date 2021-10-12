@@ -20,8 +20,10 @@ import java.util.Optional;
 
 public class PartDetailFormController {
 
-    private Part temporaryPart;
-    private boolean isNewPart = false;
+    private final int partId;
+
+    @FXML
+    private Label formLabel;
 
     @FXML
     private RadioButton inHouseRadioButton;
@@ -57,51 +59,47 @@ public class PartDetailFormController {
     private Button cancelButton;
 
     public PartDetailFormController() {
-        temporaryPart = null;
+        this.partId = -1;
     }
 
-    public PartDetailFormController(Part part) {
-        copyPart(part);
+    public PartDetailFormController(int partId) {
+        this.partId = partId;
     }
 
     public void initialize() {
-        if (temporaryPart == null) {
-            temporaryPart = getNewInHousePart();
-            isNewPart = true;
-        }
+        Part part = Inventory.lookupPart(partId);
 
-        var isInHouse = temporaryPart.getClass() == InHouse.class;
+        if (part == null) { return; }
+
+        formLabel.setText("Modify Part");
+        idTextField.setText(String.valueOf(part.getId()));
+        nameTextField.setText(part.getName());
+        inventoryTextField.setText(String.valueOf(part.getStock()));
+        priceTextField.setText(String.valueOf(part.getPrice()));
+        maximumTextField.setText(String.valueOf(part.getMax()));
+        minimumTextField.setText(String.valueOf(part.getMin()));
+
+        boolean isInHouse = part.getClass() == InHouse.class;
 
         inHouseRadioButton.setSelected(isInHouse);
-        inHouseRadioButton.setDisable(!isNewPart);
-
         outsourcedRadioButton.setSelected(!isInHouse);
-        outsourcedRadioButton.setDisable(!isNewPart);
 
-        idTextField.setText(String.valueOf(temporaryPart.getId()));
-        nameTextField.setText(temporaryPart.getName());
-        inventoryTextField.setText(String.valueOf(temporaryPart.getStock()));
-        priceTextField.setText(String.valueOf(temporaryPart.getPrice()));
-        maximumTextField.setText(String.valueOf(temporaryPart.getMax()));
-        minimumTextField.setText(String.valueOf(temporaryPart.getMax()));
+        String extra = isInHouse ? String.valueOf(((InHouse)part).getMachineId()) : ((Outsourced)part).getCompanyName();
 
-        initializeExtraFields(isInHouse, temporaryPart);
+        extraLabel.setText(isInHouse ? "Machine ID" : "Company Name");
+        extraTextField.setText(extra);
     }
 
     @FXML
     private void inHouseRadioButtonSelected(ActionEvent actionEvent) {
         outsourcedRadioButton.setSelected(false);
-        temporaryPart = getNewInHousePart();
-
-        initializeExtraFields(true, temporaryPart);
+        extraLabel.setText("Machine ID");
     }
 
     @FXML
     private void outsourcedRadioButtonSelected(ActionEvent actionEvent) {
         inHouseRadioButton.setSelected(false);
-        temporaryPart = getNewOutsourcePart();
-
-        initializeExtraFields(false, temporaryPart);
+        extraLabel.setText("Company Name");
     }
 
     @FXML
@@ -114,32 +112,34 @@ public class PartDetailFormController {
         closeWindow();
     }
 
-    private void copyPart(Part copyFrom) {
-        var partClass = copyFrom.getClass();
-
-        if (partClass == InHouse.class) {
-            InHouse inHouse = (InHouse)copyFrom;
-
-            temporaryPart = new InHouse(inHouse.getId(), inHouse.getName(), inHouse.getPrice(), inHouse.getStock(), inHouse.getMin(), inHouse.getMax(), inHouse.getMachineId());
-            return;
-        }
-
-        if (partClass == Outsourced.class) {
-            Outsourced outsourced = (Outsourced)copyFrom;
-
-            temporaryPart = new Outsourced(outsourced.getId(), outsourced.getName(), outsourced.getPrice(), outsourced.getStock(), outsourced.getMin(), outsourced.getMax(), outsourced.getCompanyName());
-        }
-    }
-
     private void saveChanges() {
-        assert temporaryPart != null;
+        Part part = Inventory.lookupPart(partId);
 
-        if (isNewPart) {
-            Inventory.addPart(temporaryPart);
-            return;
+        int id = part == null ? getNextPartId() : partId;
+        String name = nameTextField.getText();
+        int inventory = Integer.parseInt(inventoryTextField.getText());
+        double price = Double.parseDouble(priceTextField.getText());
+        int max = Integer.parseInt(maximumTextField.getText());
+        int min = Integer.parseInt(minimumTextField.getText());
+
+        Part upsertPart;
+
+        if (inHouseRadioButton.selectedProperty().get()) {
+            int machineId = Integer.parseInt(extraTextField.getText());
+            upsertPart = new InHouse(id, name, price, inventory, min, max, machineId);
+        }
+        else {
+            String companyName = extraTextField.getText();
+            upsertPart = new Outsourced(id, name, price, inventory, min, max, companyName);
         }
 
-        Inventory.updatePart(temporaryPart.getId(), temporaryPart);
+        if (part != null) {
+            Inventory.deletePart(part);
+        }
+
+        Inventory.addPart(upsertPart);
+
+        closeWindow();
     }
 
     private void closeWindow() {
@@ -151,28 +151,5 @@ public class PartDetailFormController {
         Optional<Part> oldMax = Inventory.getAllParts().stream().max(Comparator.comparingInt(Part::getId));
 
         return oldMax.map(part -> part.getId() + 1).orElse(1);
-    }
-
-    private void initializeExtraFields(boolean isInHousePart, Part part) {
-        if (isInHousePart) {
-            var inHouse = (InHouse)part;
-
-            extraLabel.setText("Machine ID");
-            extraTextField.setText(String.valueOf(inHouse.getMachineId()));
-        }
-        else {
-            var outsourced = (Outsourced)part;
-
-            extraLabel.setText("Company Name");
-            extraTextField.setText(outsourced.getCompanyName());
-        }
-    }
-
-    private InHouse getNewInHousePart() {
-        return new InHouse(getNextPartId(), "", 0.0, 0, 0, 0, 0);
-    }
-
-    private Outsourced getNewOutsourcePart() {
-        return new Outsourced(getNextPartId(), "", 0.0, 0, 0, 0, "");
     }
 }
