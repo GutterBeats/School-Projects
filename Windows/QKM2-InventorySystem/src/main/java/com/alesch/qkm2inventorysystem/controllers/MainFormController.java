@@ -4,11 +4,7 @@
 
 package com.alesch.qkm2inventorysystem.controllers;
 
-import com.alesch.qkm2inventorysystem.InventorySystem;
-import com.alesch.qkm2inventorysystem.models.InHouse;
-import com.alesch.qkm2inventorysystem.models.Inventory;
-import com.alesch.qkm2inventorysystem.models.Part;
-import com.alesch.qkm2inventorysystem.models.Product;
+import com.alesch.qkm2inventorysystem.models.*;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -23,8 +19,6 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -38,6 +32,7 @@ public final class MainFormController {
     //</editor-fold>
 
     //<editor-fold desc="FXML Control Declarations">
+
     @FXML
     private TextField partSearchField;
 
@@ -76,6 +71,7 @@ public final class MainFormController {
 
     @FXML
     private Label errorLabel;
+
     //</editor-fold>
 
     //<editor-fold desc="FXML Initialize">
@@ -124,9 +120,9 @@ public final class MainFormController {
     @FXML
     private void addPartsClicked(ActionEvent actionEvent) {
         try {
-            FXMLLoader loader = getLoader("part-detail-form.fxml");
+            FXMLLoader loader = FXMLLoader.load(Resources.getPartDetailFormFXML());
             loader.setController(new PartDetailFormController());
-            showStage(loader.load(), getPartImage());
+            showStage(loader.load(), Resources.getPartImage());
         } catch (Exception e) {
             handleException(e);
         }
@@ -141,10 +137,10 @@ public final class MainFormController {
                 return;
             }
 
-            FXMLLoader loader = getLoader("part-detail-form.fxml");
+            FXMLLoader loader = FXMLLoader.load(Resources.getPartDetailFormFXML());
             loader.setController(new PartDetailFormController(selectedPart));
 
-            showStage(loader.load(), getPartImage());
+            showStage(loader.load(), Resources.getPartImage());
         }
         catch (Exception e) {
             handleException(e);
@@ -260,10 +256,6 @@ public final class MainFormController {
         alert.showAndWait();
     }
 
-    private FXMLLoader getLoader(String resourceFile) {
-        return new FXMLLoader(Objects.requireNonNull(InventorySystem.class.getResource(resourceFile)));
-    }
-
     private void showStage(Parent parent, Image stageImage) {
         Stage stage = new Stage();
         Scene scene = new Scene(parent);
@@ -282,10 +274,6 @@ public final class MainFormController {
                 Platform.runLater(() -> errorLabel.setText(""));
             }
         }, 5000);
-    }
-
-    private Image getPartImage() {
-        return new Image(String.valueOf(InventorySystem.class.getResource("images/parts.png")));
     }
 
     //</editor-fold>
