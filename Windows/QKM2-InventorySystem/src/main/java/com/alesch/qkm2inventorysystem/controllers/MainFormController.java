@@ -120,9 +120,8 @@ public final class MainFormController {
     @FXML
     private void addPartsClicked(ActionEvent actionEvent) {
         try {
-            FXMLLoader loader = FXMLLoader.load(Resources.getPartDetailFormFXML());
+            FXMLLoader loader = new FXMLLoader(Resources.getPartDetailFormFXML());
             loader.setController(new PartDetailFormController());
-            showStage(loader.load(), Resources.getPartImage());
         } catch (Exception e) {
             handleException(e);
         }
@@ -132,13 +131,14 @@ public final class MainFormController {
     private void modifyPartsClicked(ActionEvent actionEvent) {
         try {
             Part selectedPart = partsTableView.getSelectionModel().getSelectedItem();
+
             if (selectedPart == null) {
                 showErrorText("Please select a part to modify.");
                 return;
             }
 
-            FXMLLoader loader = FXMLLoader.load(Resources.getPartDetailFormFXML());
-            loader.setController(new PartDetailFormController(selectedPart));
+            FXMLLoader loader = new FXMLLoader(Resources.getPartDetailFormFXML());
+            loader.setController(new PartDetailFormController(selectedPart.getId()));
 
             showStage(loader.load(), Resources.getPartImage());
         }
