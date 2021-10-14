@@ -18,7 +18,13 @@ import java.util.*;
 
 public class PartDetailFormController {
 
+    //<editor-fold desc="Fields">
+
     private final int partId;
+
+    //</editor-fold>
+
+    //<editor-fold desc="FXML Controls">
 
     @FXML
     private Label formLabel;
@@ -59,6 +65,8 @@ public class PartDetailFormController {
     @FXML
     private Button cancelButton;
 
+    //</editor-fold>
+
     public PartDetailFormController() {
         this.partId = -1;
     }
@@ -66,6 +74,8 @@ public class PartDetailFormController {
     public PartDetailFormController(int partId) {
         this.partId = partId;
     }
+
+    //<editor-fold desc="FXML initialization">
 
     public void initialize() {
         Part part = Inventory.lookupPart(partId);
@@ -90,6 +100,10 @@ public class PartDetailFormController {
         extraLabel.setText(isInHouse ? "Machine ID" : "Company Name");
         extraTextField.setText(extra);
     }
+
+    //</editor-fold>
+
+    //<editor-fold desc="FXML event handlers">
 
     @FXML
     private void inHouseRadioButtonSelected(ActionEvent actionEvent) {
@@ -145,6 +159,10 @@ public class PartDetailFormController {
 
         closeWindow();
     }
+
+    //</editor-fold>
+
+    //<editor-fold desc="Helpers">
 
     private void closeWindow() {
         Stage stage = (Stage)cancelButton.getScene().getWindow();
@@ -218,4 +236,6 @@ public class PartDetailFormController {
             }
         }, 5000);
     }
+
+    //</editor-fold>
 }
