@@ -4,19 +4,17 @@
 
 package com.alesch.qkm2inventorysystem.controllers;
 
-import com.alesch.qkm2inventorysystem.InventorySystem;
 import com.alesch.qkm2inventorysystem.models.*;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-import java.util.Comparator;
-import java.util.Optional;
+import java.util.*;
 
 public class PartDetailFormController {
 
@@ -54,6 +52,9 @@ public class PartDetailFormController {
 
     @FXML
     private TextField extraTextField;
+
+    @FXML
+    private Label errorLabel;
 
     @FXML
     private Button cancelButton;
@@ -113,6 +114,9 @@ public class PartDetailFormController {
     }
 
     private void saveChanges() {
+
+        if (!validateFields()) { return; }
+
         Part part = Inventory.lookupPart(partId);
 
         int id = part == null ? getNextPartId() : partId;
@@ -151,5 +155,67 @@ public class PartDetailFormController {
         Optional<Part> oldMax = Inventory.getAllParts().stream().max(Comparator.comparingInt(Part::getId));
 
         return oldMax.map(part -> part.getId() + 1).orElse(1);
+    }
+
+    private boolean validateFields() {
+
+        if (nameTextField.getText().isBlank()) {
+            showErrorText("Name cannot be empty.");
+            return false;
+        }
+
+        if (!validateNumberField(inventoryTextField)) {
+            showErrorText("Inventory must be a number.");
+            return false;
+        }
+
+        if (!validateNumberField(priceTextField)) {
+            showErrorText("Price must be a number.");
+            return false;
+        }
+
+        if (!validateNumberField(maximumTextField)) {
+            showErrorText("Maximum must be a number.");
+            return false;
+        }
+
+        if (!validateNumberField(minimumTextField)) {
+            showErrorText("Minimum must be a number.");
+            return false;
+        }
+
+        if (extraTextField.getText().isBlank()) {
+            showErrorText(errorLabel.getText() + " cannot be blank.");
+            return false;
+        }
+
+        if (Objects.equals(extraTextField.getText(), "Machine ID") && !validateNumberField(extraTextField)) {
+            showErrorText("Machine ID must be a number.");
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean validateNumberField(TextField textField) {
+        try {
+            Integer.parseInt(textField.getText());
+        }
+        catch (Exception e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private void showErrorText(String message) {
+        errorLabel.setText(message);
+
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() -> errorLabel.setText(""));
+            }
+        }, 5000);
     }
 }
