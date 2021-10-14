@@ -178,12 +178,35 @@ public final class MainFormController {
 
     @FXML
     private void addProductClicked(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(Resources.getProductDetailFormFXML());
+            loader.setController(new ProductDetailFormController());
 
+            showStage(loader.load(), Resources.getProductImage(), "Add Product");
+        }
+        catch (Exception e) {
+            handleException(e);
+        }
     }
 
     @FXML
     private void modifyProductClicked(ActionEvent actionEvent) {
+        try {
+            Product selectedProduct = productTableView.getSelectionModel().getSelectedItem();
 
+            if (selectedProduct == null) {
+                showErrorText("Please select a product to modify.");
+                return;
+            }
+
+            FXMLLoader loader = new FXMLLoader(Resources.getProductDetailFormFXML());
+            loader.setController(new ProductDetailFormController(selectedProduct.getId()));
+
+            showStage(loader.load(), Resources.getProductImage(), "Update " + selectedProduct.getName());
+        }
+        catch (Exception e) {
+            handleException(e);
+        }
     }
 
     @FXML

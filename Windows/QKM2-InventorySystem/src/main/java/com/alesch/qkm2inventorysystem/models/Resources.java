@@ -18,6 +18,10 @@ public final class Resources {
         return Objects.requireNonNull(InventorySystem.class.getResource("part-detail-form.fxml"));
     }
 
+    public static URL getProductDetailFormFXML() {
+        return Objects.requireNonNull(InventorySystem.class.getResource("product-detail-form.fxml"));
+    }
+
     public static Image getInventoryImage() {
         return new Image(String.valueOf(InventorySystem.class.getResource("images/inventory.png")));
     }
