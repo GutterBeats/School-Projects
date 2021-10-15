@@ -24,13 +24,6 @@ import java.util.TimerTask;
 
 public final class MainFormController {
 
-    //<editor-fold desc="Fields">
-
-    private Timer partSearchTimer = new Timer();
-    private Timer productSearchTimer = new Timer();
-
-    //</editor-fold>
-
     //<editor-fold desc="FXML Control Declarations">
 
     @FXML
@@ -238,36 +231,28 @@ public final class MainFormController {
 
     @FXML
     private void partSearchField_KeyTyped(KeyEvent keyEvent) {
-        partSearchTimer.cancel();
-        partSearchTimer = new Timer();
+        Object source = keyEvent.getSource();
+        if (source.getClass() != TextField.class) {
+            return;
+        }
 
-        partSearchTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                String partName = partSearchField.getText();
-                var items = partName.length() == 0 ? Inventory.getAllParts() : Inventory.lookupPart(partName);
+        String partName = ((TextField)source).getText().trim();
+        var items = partName.length() == 0 ? Inventory.getAllParts() : Inventory.lookupPart(partName);
 
-                partsTableView.setItems(items);
-                partSearchTimer.cancel();
-            }
-        }, 500);
+        partsTableView.setItems(items);
     }
 
     @FXML
     private void productSearchField_KeyTyped(KeyEvent keyEvent) {
-        productSearchTimer.cancel();
-        productSearchTimer = new Timer();
+        Object source = keyEvent.getSource();
+        if (source.getClass() != TextField.class) {
+            return;
+        }
 
-        productSearchTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                String productName = productSearchField.getText().trim();
-                var items = productName.length() == 0 ? Inventory.getAllProducts() : Inventory.lookupProduct(productName);
+        String productName = ((TextField)source).getText().trim();
+        var items = productName.length() == 0 ? Inventory.getAllProducts() : Inventory.lookupProduct(productName);
 
-                productTableView.setItems(items);
-                productSearchTimer.cancel();
-            }
-        }, 500);
+        productTableView.setItems(items);
     }
 
     //</editor-fold>
