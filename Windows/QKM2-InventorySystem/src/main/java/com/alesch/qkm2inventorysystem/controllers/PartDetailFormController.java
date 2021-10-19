@@ -5,14 +5,15 @@
 package com.alesch.qkm2inventorysystem.controllers;
 
 import com.alesch.qkm2inventorysystem.models.*;
+import com.alesch.qkm2inventorysystem.utils.*;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
+import javafx.util.converter.DoubleStringConverter;
+import javafx.util.converter.IntegerStringConverter;
 
 import java.util.*;
 
@@ -78,6 +79,8 @@ public class PartDetailFormController {
     //<editor-fold desc="FXML initialization">
 
     public void initialize() {
+        initializeNumberFields();
+
         Part part = Inventory.lookupPart(partId);
 
         if (part == null) { return; }
@@ -99,6 +102,13 @@ public class PartDetailFormController {
 
         extraLabel.setText(isInHouse ? "Machine ID" : "Company Name");
         extraTextField.setText(extra);
+    }
+
+    private void initializeNumberFields() {
+        inventoryTextField.setTextFormatter(new TextFormatter<>(new IntegerStringConverter(), 0, new IntegerFilter()));
+        maximumTextField.setTextFormatter(new TextFormatter<>(new IntegerStringConverter(), 0, new IntegerFilter()));
+        minimumTextField.setTextFormatter(new TextFormatter<>(new IntegerStringConverter(), 0, new IntegerFilter()));
+        priceTextField.setTextFormatter(new TextFormatter<>(new DoubleStringConverter(), 0.0, new DoubleFilter()));
     }
 
     //</editor-fold>
@@ -179,47 +189,13 @@ public class PartDetailFormController {
 
         if (nameTextField.getText().isBlank()) {
             showErrorText("Name cannot be empty.");
-            return false;
-        }
-
-        if (!validateNumberField(inventoryTextField)) {
-            showErrorText("Inventory must be a number.");
-            return false;
-        }
-
-        if (!validateNumberField(priceTextField)) {
-            showErrorText("Price must be a number.");
-            return false;
-        }
-
-        if (!validateNumberField(maximumTextField)) {
-            showErrorText("Maximum must be a number.");
-            return false;
-        }
-
-        if (!validateNumberField(minimumTextField)) {
-            showErrorText("Minimum must be a number.");
+            nameTextField.requestFocus();
             return false;
         }
 
         if (extraTextField.getText().isBlank()) {
             showErrorText(errorLabel.getText() + " cannot be blank.");
-            return false;
-        }
-
-        if (Objects.equals(extraTextField.getText(), "Machine ID") && !validateNumberField(extraTextField)) {
-            showErrorText("Machine ID must be a number.");
-            return false;
-        }
-
-        return true;
-    }
-
-    private boolean validateNumberField(TextField textField) {
-        try {
-            Integer.parseInt(textField.getText());
-        }
-        catch (Exception e) {
+            extraTextField.requestFocus();
             return false;
         }
 
