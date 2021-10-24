@@ -84,6 +84,7 @@ public final class MainFormController {
         Inventory.addPart(new InHouse(2, "Wheel", 11.00, 16, 1, 20, 2));
         Inventory.addPart(new InHouse(3, "Seat", 15.00, 10, 1, 20, 3));
 
+        partsTableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         partsTableView.setItems(Inventory.getAllParts());
         partsTableView.setPlaceholder(new Label("No Parts Available"));
     }
@@ -97,6 +98,7 @@ public final class MainFormController {
         Inventory.addProduct(new Product(1000, "Giant Bike", 299.99, 5, 1, 5));
         Inventory.addProduct(new Product(1001, "Tricycle", 99.99, 3, 1, 5));
 
+        productTableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         productTableView.setItems(Inventory.getAllProducts());
         productTableView.setPlaceholder(new Label("No Products Available"));
     }
@@ -144,28 +146,23 @@ public final class MainFormController {
 
     @FXML
     private void deletePartsClicked(ActionEvent actionEvent) {
-        ObservableList<Part> selectedParts = partsTableView.getSelectionModel().getSelectedItems();
+        var selectedPart = partsTableView.getSelectionModel().getSelectedItem();
 
-        if (selectedParts.isEmpty()) {
+        if (selectedPart == null) {
             showErrorText("Please select a part to delete.");
             return;
         }
 
-        StringBuilder builder = new StringBuilder("Are you sure you want to delete the following part(s)?")
-                .append(System.lineSeparator())
-                .append(System.lineSeparator());
+        String builder = "Are you sure you want to delete the following part?" +
+                System.lineSeparator() +
+                System.lineSeparator() +
+                selectedPart.getName();
 
-        for (Part selectedPart : selectedParts) {
-            builder.append(selectedPart.getName()).append(System.lineSeparator());
-        }
-
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, builder.toString(), ButtonType.YES, ButtonType.NO);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, builder, ButtonType.YES, ButtonType.NO);
         alert.showAndWait().ifPresent(response -> {
             if (response != ButtonType.YES) return;
 
-            for (Part selectedPart : selectedParts) {
-                Inventory.deletePart(selectedPart);
-            }
+            Inventory.deletePart(selectedPart);
         });
     }
 
@@ -204,28 +201,23 @@ public final class MainFormController {
 
     @FXML
     private void deleteProductClicked(ActionEvent actionEvent) {
-        ObservableList<Product> selectedProducts = productTableView.getSelectionModel().getSelectedItems();
+        var selectedProduct = productTableView.getSelectionModel().getSelectedItem();
 
-        if (selectedProducts.isEmpty()) {
+        if (selectedProduct == null) {
             showErrorText("Please select a product to delete.");
             return;
         }
 
-        StringBuilder builder = new StringBuilder("Are you sure you want to delete the following product(s)?")
-                .append(System.lineSeparator())
-                .append(System.lineSeparator());
+        String builder = "Are you sure you want to delete the following product?" +
+                System.lineSeparator() +
+                System.lineSeparator() +
+                selectedProduct.getName();
 
-        for (Product selectedProduct : selectedProducts) {
-            builder.append(selectedProduct.getName()).append(System.lineSeparator());
-        }
-
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, builder.toString(), ButtonType.YES, ButtonType.NO);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, builder, ButtonType.YES, ButtonType.NO);
         alert.showAndWait().ifPresent(response -> {
             if (response != ButtonType.YES) return;
 
-            for (Product selectedProduct : selectedProducts) {
-                Inventory.deleteProduct(selectedProduct);
-            }
+            Inventory.deleteProduct(selectedProduct);
         });
     }
 
