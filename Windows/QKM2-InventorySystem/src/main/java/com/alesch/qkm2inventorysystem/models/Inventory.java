@@ -77,7 +77,7 @@ public final class Inventory {
     /**
      * Look up a Product in the Inventory. Will return the first matched Product.
      * @param productId The ID of the Product to find.
-     * @return A Product instance from the Inventory.
+     * @return A Product instance from the Inventory or null if no match was found.
      */
     public static Product lookupProduct(int productId) {
         // Loop through all Products to find a matching ProductID
