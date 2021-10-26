@@ -208,12 +208,10 @@ public final class MainFormController {
             return;
         }
 
-        String builder = "Are you sure you want to delete the following product?" +
-                System.lineSeparator() +
-                System.lineSeparator() +
-                selectedProduct.getName();
+        String confirmationMessage = "Are you sure you want to delete the following product?" +
+                System.lineSeparator() + System.lineSeparator() + selectedProduct.getName();
 
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, builder, ButtonType.YES, ButtonType.NO);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, confirmationMessage, ButtonType.YES, ButtonType.NO);
         alert.showAndWait().ifPresent(response -> {
             if (response != ButtonType.YES) return;
 
