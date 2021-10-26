@@ -124,7 +124,10 @@
         </padding>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
          <children>
-            <Label fx:id="errorLabel" AnchorPane.leftAnchor="0.0" />
+            <Label fx:id="errorLabel" textFill="RED" AnchorPane.leftAnchor="0.0">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
               <Button mnemonicParsing="false" onMouseClicked="#exitButtonClicked" text="Exit" AnchorPane.rightAnchor="0.0">
                   <font>
                       <Font size="14.0" />

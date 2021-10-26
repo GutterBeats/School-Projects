@@ -16,7 +16,7 @@
    <children>
       <HBox prefHeight="100.0" prefWidth="200.0" spacing="50.0" style="-fx-border-color: #000; -fx-border-radius: 20; -fx-border-width: 2;" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0">
          <children>
-            <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+            <VBox fillWidth="false">
                <children>
                   <Label fx:id="titleLabel" text="Add Product">
                      <padding>
@@ -82,6 +82,15 @@
                         <TextField fx:id="minimumTextField" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                      </children>
                   </GridPane>
+                  <AnchorPane VBox.vgrow="ALWAYS">
+                     <children>
+                        <Label fx:id="errorLabel" textFill="RED" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="20.0">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
                </children>
             </VBox>
             <VBox alignment="CENTER_RIGHT" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
@@ -97,7 +106,7 @@
                   <TableView fx:id="partTableView" prefHeight="200.0" prefWidth="200.0">
                     <columns>
                       <TableColumn fx:id="partPartIdColumn" prefWidth="48.0" text="Part ID" />
-                      <TableColumn fx:id="partPartNameColumn" prefWidth="100.0" text="Part Name" />
+                      <TableColumn fx:id="partPartNameColumn" prefWidth="96.0" text="Part Name" />
                         <TableColumn fx:id="partInventoryLevelColumn" prefWidth="92.0" text="Inventory Level" />
                         <TableColumn fx:id="partPriceColumn" prefWidth="135.0" text="Price/ Cost Per Unit" />
                     </columns>
@@ -105,15 +114,11 @@
                         <Insets top="15.0" />
                      </VBox.margin>
                   </TableView>
-                  <AnchorPane prefHeight="48.0" prefWidth="373.0" VBox.vgrow="NEVER">
-                     <children>
-                        <Label fx:id="errorLabel" AnchorPane.leftAnchor="0.0" />
-                        <Button mnemonicParsing="false" text="Add" AnchorPane.rightAnchor="0.0" />
-                     </children>
+                  <Button mnemonicParsing="false" onAction="#addPartButtonClicked" text="Add">
                      <VBox.margin>
                         <Insets top="15.0" />
                      </VBox.margin>
-                  </AnchorPane>
+                  </Button>
                   <TableView fx:id="productPartTableView" prefHeight="200.0" prefWidth="200.0">
                     <columns>
                       <TableColumn fx:id="productPartIdColumn" prefWidth="48.0" text="Part ID" />
@@ -125,13 +130,13 @@
                         <Insets top="15.0" />
                      </VBox.margin>
                   </TableView>
-                  <Button mnemonicParsing="false" text="Remove Associated Part">
+                  <Button mnemonicParsing="false" onAction="#removeAssociatedPartButtonClicked" text="Remove Associated Part">
                      <VBox.margin>
                         <Insets top="15.0" />
                      </VBox.margin></Button>
                   <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
                      <children>
-                        <Button mnemonicParsing="false" text="Save" />
+                        <Button mnemonicParsing="false" onAction="#saveButtonClicked" text="Save" />
                         <Button mnemonicParsing="false" onAction="#cancelButtonClicked" text="Cancel" />
                      </children>
                   </HBox>
