@@ -24,7 +24,7 @@ public class ProductDetailFormController {
 
     //<editor-fold desc="Fields">
 
-    private final int productId;
+    private final Product existingProduct;
 
     private final HashMap<Integer, ChangeType> modifiedProducts;
 
@@ -98,24 +98,22 @@ public class ProductDetailFormController {
     }
 
     public ProductDetailFormController(int productId) {
-        this.productId = productId;
+        this.existingProduct = Inventory.lookupProduct(productId);
         this.modifiedProducts = new HashMap<>();
     }
 
     public void initialize() {
-        Product product = Inventory.lookupProduct(productId);
-
-        loadProductPartsTable(product);
+        loadProductPartsTable(existingProduct);
         loadAllPartsTable();
 
-        if (product == null) return;
+        if (existingProduct == null) return;
 
-        idTextField.setText(String.valueOf(product.getId()));
-        nameTextField.setText(product.getName());
-        inventoryTextField.setText(String.valueOf(product.getStock()));
-        priceTextField.setText(String.valueOf(product.getPrice()));
-        maximumTextField.setText(String.valueOf(product.getMax()));
-        minimumTextField.setText(String.valueOf(product.getMin()));
+        idTextField.setText(String.valueOf(existingProduct.getId()));
+        nameTextField.setText(existingProduct.getName());
+        inventoryTextField.setText(String.valueOf(existingProduct.getStock()));
+        priceTextField.setText(String.valueOf(existingProduct.getPrice()));
+        maximumTextField.setText(String.valueOf(existingProduct.getMax()));
+        minimumTextField.setText(String.valueOf(existingProduct.getMin()));
     }
 
     private void initializeNumberFields() {
@@ -176,7 +174,7 @@ public class ProductDetailFormController {
             return;
         }
 
-        modifiedProducts.put(selectedItem.getId(), ChangeType.ADDED);
+        alterModifiedParts(selectedItem.getId(), ChangeType.ADDED);
         productPartTableView.getItems().add(selectedItem);
         filterPartsTableView();
     }
@@ -202,7 +200,7 @@ public class ProductDetailFormController {
         confirmation.showAndWait().ifPresent(response -> {
             if (response != ButtonType.YES) return;
 
-            modifiedProducts.remove(selectedItem.getId());
+            alterModifiedParts(selectedItem.getId(), ChangeType.REMOVED);
             productPartTableView.getItems().removeIf(p -> p.getId() == selectedItem.getId());
             filterPartsTableView();
         });
@@ -231,8 +229,6 @@ public class ProductDetailFormController {
     //<editor-fold desc="Helpers">
 
     private ValidationResult<Product> validateChanges() {
-        Product existingProduct = Inventory.lookupProduct(productId);
-
         Product newProduct = new Product(
             existingProduct != null ? existingProduct.getId() : getNextProductId(),
             nameTextField.getText(),
@@ -248,16 +244,37 @@ public class ProductDetailFormController {
     }
 
     private void saveChanges(Product newProduct) {
+        if (existingProduct == null) {
+            for (Part part : productPartTableView.getItems()) {
+                newProduct.addAssociatedPart(part);
+            }
 
+            Inventory.addProduct(newProduct);
+            return;
+        }
+
+        existingProduct.setMax(newProduct.getMax());
+        existingProduct.setMin(newProduct.getMin());
+        existingProduct.setName(newProduct.getName());
+        existingProduct.setPrice(newProduct.getPrice());
+        existingProduct.setStock(newProduct.getStock());
     }
 
     private void discardChanges() {
+        if (existingProduct == null) {
+            return;
+        }
+
         for (int key : modifiedProducts.keySet()) {
+            Part part = Inventory.lookupPart(key);
+
             switch (modifiedProducts.get(key))
             {
                 case ADDED:
+                    existingProduct.deleteAssociatedPart(part);
                     break;
                 case REMOVED:
+                    existingProduct.addAssociatedPart(part);
                     break;
             }
         }
@@ -292,6 +309,15 @@ public class ProductDetailFormController {
         Optional<Product> oldMax = Inventory.getAllProducts().stream().max(Comparator.comparingInt(Product::getId));
 
         return oldMax.map(product -> product.getId() + 1).orElse(1);
+    }
+
+    private void alterModifiedParts(int partId, ChangeType changeType) {
+        if (modifiedProducts.containsKey(partId)) {
+            modifiedProducts.remove(partId);
+            return;
+        }
+
+        modifiedProducts.put(partId, changeType);
     }
 
     //</editor-fold>
