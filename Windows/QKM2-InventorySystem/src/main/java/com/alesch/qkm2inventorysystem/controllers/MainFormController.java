@@ -162,7 +162,9 @@ public final class MainFormController {
         alert.showAndWait().ifPresent(response -> {
             if (response != ButtonType.YES) return;
 
-            Inventory.deletePart(selectedPart);
+            if (!Inventory.deletePart(selectedPart)) {
+                showErrorText("There was an error deleting the selected part.");
+            }
         });
     }
 
@@ -215,7 +217,9 @@ public final class MainFormController {
         alert.showAndWait().ifPresent(response -> {
             if (response != ButtonType.YES) return;
 
-            Inventory.deleteProduct(selectedProduct);
+            if (!Inventory.deleteProduct(selectedProduct)) {
+                showErrorText("There was an error deleting the product.");
+            }
         });
     }
 
