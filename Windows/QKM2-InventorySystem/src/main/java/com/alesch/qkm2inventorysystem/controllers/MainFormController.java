@@ -119,6 +119,7 @@ public final class MainFormController {
             loader.setController(new PartDetailFormController());
 
             showStage(loader.load(), Resources.getPartImage(), "Add New Part");
+            refreshTableViews();
         } catch (Exception e) {
             handleException(e);
         }
@@ -138,6 +139,7 @@ public final class MainFormController {
             loader.setController(new PartDetailFormController(selectedPart.getId()));
 
             showStage(loader.load(), Resources.getPartImage(), "Update " + selectedPart.getName());
+            refreshTableViews();
         }
         catch (Exception e) {
             handleException(e);
@@ -153,12 +155,10 @@ public final class MainFormController {
             return;
         }
 
-        String builder = "Are you sure you want to delete the following part?" +
-                System.lineSeparator() +
-                System.lineSeparator() +
-                selectedPart.getName();
+        String confirmationMessage = "Are you sure you want to delete the following part?" +
+                System.lineSeparator() + System.lineSeparator() + selectedPart.getName();
 
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, builder, ButtonType.YES, ButtonType.NO);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, confirmationMessage, ButtonType.YES, ButtonType.NO);
         alert.showAndWait().ifPresent(response -> {
             if (response != ButtonType.YES) return;
 
@@ -175,6 +175,7 @@ public final class MainFormController {
             loader.setController(new ProductDetailFormController());
 
             showStage(loader.load(), Resources.getProductImage(), "Add Product");
+            refreshTableViews();
         }
         catch (Exception e) {
             handleException(e);
@@ -195,6 +196,7 @@ public final class MainFormController {
             loader.setController(new ProductDetailFormController(selectedProduct.getId()));
 
             showStage(loader.load(), Resources.getProductImage(), "Update " + selectedProduct.getName());
+            refreshTableViews();
         }
         catch (Exception e) {
             handleException(e);
@@ -207,6 +209,11 @@ public final class MainFormController {
 
         if (selectedProduct == null) {
             showErrorText("Please select a product to delete.");
+            return;
+        }
+
+        if (!selectedProduct.getAllAssociatedParts().isEmpty()) {
+            showErrorText("Remove associated parts before deleting product.");
             return;
         }
 
@@ -252,6 +259,11 @@ public final class MainFormController {
     //</editor-fold>
 
     //<editor-fold desc="Helpers">
+
+    private void refreshTableViews() {
+        partsTableView.refresh();
+        productTableView.refresh();
+    }
 
     private void handleException(Exception e) {
         e.printStackTrace();

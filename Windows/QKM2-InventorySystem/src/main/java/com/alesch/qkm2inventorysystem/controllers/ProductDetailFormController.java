@@ -9,6 +9,8 @@ import com.alesch.qkm2inventorysystem.utils.DoubleFilter;
 import com.alesch.qkm2inventorysystem.utils.FieldValidator;
 import com.alesch.qkm2inventorysystem.utils.IntegerFilter;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -25,8 +27,6 @@ public class ProductDetailFormController {
     //<editor-fold desc="Fields">
 
     private final Product existingProduct;
-
-    private final HashMap<Integer, ChangeType> modifiedProducts;
 
     //</editor-fold>
 
@@ -99,12 +99,12 @@ public class ProductDetailFormController {
 
     public ProductDetailFormController(int productId) {
         this.existingProduct = Inventory.lookupProduct(productId);
-        this.modifiedProducts = new HashMap<>();
     }
 
     public void initialize() {
         loadProductPartsTable(existingProduct);
         loadAllPartsTable();
+        initializeNumberFields();
 
         if (existingProduct == null) return;
 
@@ -131,7 +131,7 @@ public class ProductDetailFormController {
 
         partTableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         partTableView.setPlaceholder(new Label("No Parts Available"));
-        filterPartsTableView();
+        partTableView.setItems(Inventory.getAllParts());
     }
 
     private void loadProductPartsTable(Product product) {
@@ -145,7 +145,13 @@ public class ProductDetailFormController {
 
         if (product == null) return;
 
-        productPartTableView.setItems(product.getAllAssociatedParts());
+        ObservableList<Part> productParts = FXCollections.observableArrayList();
+
+        for (Part part : product.getAllAssociatedParts()) {
+            productParts.add(part);
+        }
+
+        productPartTableView.setItems(productParts);
     }
 
     //</editor-fold>
@@ -174,9 +180,7 @@ public class ProductDetailFormController {
             return;
         }
 
-        alterModifiedParts(selectedItem.getId(), ChangeType.ADDED);
         productPartTableView.getItems().add(selectedItem);
-        filterPartsTableView();
     }
 
     @FXML
@@ -200,9 +204,7 @@ public class ProductDetailFormController {
         confirmation.showAndWait().ifPresent(response -> {
             if (response != ButtonType.YES) return;
 
-            alterModifiedParts(selectedItem.getId(), ChangeType.REMOVED);
-            productPartTableView.getItems().removeIf(p -> p.getId() == selectedItem.getId());
-            filterPartsTableView();
+            productPartTableView.getItems().remove(selectedItem);
         });
     }
 
@@ -220,7 +222,6 @@ public class ProductDetailFormController {
 
     @FXML
     private void cancelButtonClicked(ActionEvent event) {
-        discardChanges();
         exit(event);
     }
 
@@ -253,31 +254,17 @@ public class ProductDetailFormController {
             return;
         }
 
+        existingProduct.getAllAssociatedParts().clear();
+
+        for (Part part : productPartTableView.getItems()) {
+            existingProduct.addAssociatedPart(part);
+        }
+
         existingProduct.setMax(newProduct.getMax());
         existingProduct.setMin(newProduct.getMin());
         existingProduct.setName(newProduct.getName());
         existingProduct.setPrice(newProduct.getPrice());
         existingProduct.setStock(newProduct.getStock());
-    }
-
-    private void discardChanges() {
-        if (existingProduct == null) {
-            return;
-        }
-
-        for (int key : modifiedProducts.keySet()) {
-            Part part = Inventory.lookupPart(key);
-
-            switch (modifiedProducts.get(key))
-            {
-                case ADDED:
-                    existingProduct.deleteAssociatedPart(part);
-                    break;
-                case REMOVED:
-                    existingProduct.addAssociatedPart(part);
-                    break;
-            }
-        }
     }
 
     private void exit(ActionEvent event) {
@@ -288,10 +275,6 @@ public class ProductDetailFormController {
 
         Stage stage = (Stage)((Button)source).getScene().getWindow();
         stage.close();
-    }
-
-    private void filterPartsTableView() {
-        partTableView.setItems(Inventory.getAllParts().filtered(part -> !productPartTableView.getItems().contains(part)));
     }
 
     private void showErrorText(String message) {
@@ -307,17 +290,9 @@ public class ProductDetailFormController {
 
     private int getNextProductId() {
         Optional<Product> oldMax = Inventory.getAllProducts().stream().max(Comparator.comparingInt(Product::getId));
+        Random random = new Random();
 
-        return oldMax.map(product -> product.getId() + 1).orElse(1);
-    }
-
-    private void alterModifiedParts(int partId, ChangeType changeType) {
-        if (modifiedProducts.containsKey(partId)) {
-            modifiedProducts.remove(partId);
-            return;
-        }
-
-        modifiedProducts.put(partId, changeType);
+        return oldMax.map(product -> product.getId() + random.nextInt(5000 - product.getId()) + product.getId()).orElse(random.nextInt(5000));
     }
 
     //</editor-fold>
