@@ -6,6 +6,7 @@ package com.alesch.qkm2inventorysystem.utils;
 
 import com.alesch.qkm2inventorysystem.models.InHouse;
 import com.alesch.qkm2inventorysystem.models.Outsourced;
+import com.alesch.qkm2inventorysystem.models.Part;
 import com.alesch.qkm2inventorysystem.models.Product;
 
 public class FieldValidator {
@@ -17,11 +18,11 @@ public class FieldValidator {
         }
 
         if (product.getMax() < 1) {
-            return "Maximum must be at least one.";
+            return "Maximum must be at least One.";
         }
 
         if (product.getMin() < 1) {
-            return "Minimum must be at least one.";
+            return "Minimum must be at least One.";
         }
 
         if (product.getMin() >= product.getMax()) {
@@ -40,11 +41,36 @@ public class FieldValidator {
         return "";
     }
 
-    public static String validatePartFields(InHouse inHouse) {
-        return "";
-    }
+    public static String validatePartFields(Part part) {
+        if (part.getName().isBlank()) {
+            return "Name cannot be blank.";
+        }
 
-    public static String validatePartFields(Outsourced outsourced) {
-        return "";
+        if (part.getMax() < 1) {
+            return "Maximum must be at least One.";
+        }
+
+        if (part.getMin() < 1) {
+            return "Minimum must be at least One.";
+        }
+
+        if (part.getMin() >= part.getMax()) {
+            return "Maximum must be greater than Minimum.";
+        }
+
+        var stock = part.getStock();
+        if (stock < part.getMin() || stock > part.getMax()) {
+            return "Inventory must be between Minimum and Maximum.";
+        }
+
+        if (Double.compare(part.getPrice(), 0) <= 0) {
+            return "Price must be greater than Zero.";
+        }
+
+        if (part.getClass() == InHouse.class) {
+            return ((InHouse)part).getMachineId() < 1 ? "Machine ID must be greater than Zero." : "";
+        }
+
+        return ((Outsourced)part).getCompanyName().isBlank() ? "Company name cannot be blank." : "";
     }
 }

@@ -86,19 +86,16 @@
         </Label>
         <TextField fx:id="extraTextField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
     </GridPane>
-    <HBox alignment="CENTER_RIGHT" layoutX="100.0" prefHeight="53.0" prefWidth="500.0" spacing="25.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+    <HBox alignment="CENTER_RIGHT" layoutX="100.0" prefHeight="53.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
       <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
          <children>
-            <Label fx:id="errorLabel" textFill="RED">
+            <Label fx:id="errorLabel" textFill="RED" HBox.hgrow="ALWAYS">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-         </children>
-         <padding>
-            <Insets left="32.0" />
-         </padding></HBox>
-      <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="25.0" HBox.hgrow="ALWAYS">
+         </children></HBox>
+      <HBox alignment="CENTER_RIGHT" spacing="25.0" HBox.hgrow="NEVER">
          <children>
               <Button mnemonicParsing="false" onAction="#saveButtonClicked" text="Save" />
               <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelButtonClicked" text="Cancel" />
