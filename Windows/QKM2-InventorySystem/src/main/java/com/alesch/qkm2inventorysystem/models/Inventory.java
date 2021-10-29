@@ -67,11 +67,20 @@ public final class Inventory {
 
     /**
      * Look up a part in the Inventory based on its name. Will return all parts with similar names.
-     * @param partName The name of the part to look for.
+     * @param partNameOrId The name or id of the part to look for.
      * @return An ObservableList of Part objects that match the given part name.
      */
-    public static ObservableList<Part> lookupPart(String partName) {
-        return allParts.filtered(part -> part.getName().toLowerCase(Locale.ROOT).contains(partName.toLowerCase(Locale.ROOT)));
+    public static ObservableList<Part> lookupPart(String partNameOrId) {
+        try {
+            int id = Integer.parseInt(partNameOrId);
+            Part part = lookupPart(id);
+            String name = part != null ? part.getName() : "___unknown_part___";
+
+            return allParts.filtered(filtered -> filtered.getName().equals(name));
+        }
+        catch (Exception ignored) { }
+
+        return allParts.filtered(part -> part.getName().toLowerCase(Locale.ROOT).contains(partNameOrId.toLowerCase(Locale.ROOT)));
     }
 
     /**
@@ -96,11 +105,20 @@ public final class Inventory {
 
     /**
      * Look up a product in the Inventory based on its name. Will return all products with similar names.
-     * @param productName The name of the product to look for.
+     * @param productNameOrId The name or id of the product to look for.
      * @return An ObservableList of Product objects that match the given product name.
      */
-    public static ObservableList<Product> lookupProduct(String productName) {
-        return allProducts.filtered(product -> product.getName().toLowerCase(Locale.ROOT).contains(productName.toLowerCase(Locale.ROOT)));
+    public static ObservableList<Product> lookupProduct(String productNameOrId) {
+        try {
+            int id = Integer.parseInt(productNameOrId);
+            Product product = lookupProduct(id);
+            String name = product != null ? product.getName() : "___unknown_product___";
+
+            return allProducts.filtered(filtered -> filtered.getName().equals(name));
+        }
+        catch (Exception ignored) { }
+
+        return allProducts.filtered(product -> product.getName().toLowerCase(Locale.ROOT).contains(productNameOrId.toLowerCase(Locale.ROOT)));
     }
 
     /**
