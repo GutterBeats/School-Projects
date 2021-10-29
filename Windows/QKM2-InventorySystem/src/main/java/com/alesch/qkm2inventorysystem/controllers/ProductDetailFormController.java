@@ -291,8 +291,9 @@ public class ProductDetailFormController {
     private int getNextProductId() {
         Optional<Product> oldMax = Inventory.getAllProducts().stream().max(Comparator.comparingInt(Product::getId));
         Random random = new Random();
+        int nextPossible = oldMax.map(product -> product.getId() + random.nextInt(5000 - product.getId()) + product.getId()).orElse(random.nextInt(5000));
 
-        return oldMax.map(product -> product.getId() + random.nextInt(5000 - product.getId()) + product.getId()).orElse(random.nextInt(5000));
+        return Inventory.getAllProducts().stream().map(pr -> pr.getId()).anyMatch(n -> n == nextPossible) ? getNextProductId() : nextPossible;
     }
 
     //</editor-fold>

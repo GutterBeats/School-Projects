@@ -179,8 +179,9 @@ public class PartDetailFormController {
     private int getNextPartId() {
         Optional<Part> oldMax = Inventory.getAllParts().stream().max(Comparator.comparingInt(Part::getId));
         Random random = new Random();
+        int nextPossible = oldMax.map(part -> part.getId() + random.nextInt(100 - part.getId()) + part.getId()).orElse(random.nextInt(100));
 
-        return oldMax.map(part -> part.getId() + random.nextInt(100 - part.getId()) + part.getId()).orElse(random.nextInt(100));
+        return Inventory.getAllParts().stream().map(part -> part.getId()).anyMatch(n -> n == nextPossible) ? getNextPartId() : nextPossible;
     }
 
     private ValidationResult<Part> validatePartFields() {
