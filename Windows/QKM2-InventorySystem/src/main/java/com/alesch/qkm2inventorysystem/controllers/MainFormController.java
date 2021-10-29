@@ -138,7 +138,7 @@ public final class MainFormController {
             FXMLLoader loader = new FXMLLoader(Resources.getPartDetailFormFXML());
             loader.setController(new PartDetailFormController(selectedPart.getId()));
 
-            showStage(loader.load(), Resources.getPartImage(), "Update " + selectedPart.getName());
+            showStage(loader.load(), Resources.getPartImage(), "Modify " + selectedPart.getName());
             refreshTableViews();
         }
         catch (Exception e) {
@@ -195,7 +195,7 @@ public final class MainFormController {
             FXMLLoader loader = new FXMLLoader(Resources.getProductDetailFormFXML());
             loader.setController(new ProductDetailFormController(selectedProduct.getId()));
 
-            showStage(loader.load(), Resources.getProductImage(), "Update " + selectedProduct.getName());
+            showStage(loader.load(), Resources.getProductImage(), "Modify " + selectedProduct.getName());
             refreshTableViews();
         }
         catch (Exception e) {
