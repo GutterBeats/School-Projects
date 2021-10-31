@@ -245,7 +245,10 @@ public final class MainFormController {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, confirmationMessage, ButtonType.YES, ButtonType.NO);
         alert.showAndWait().ifPresent(response -> {
-            if (response != ButtonType.YES) return;
+            if (response != ButtonType.YES) {
+                showErrorText("Part was not deleted.");
+                return;
+            }
 
             if (!Inventory.deletePart(selectedPart)) {
                 showErrorText("There was an error deleting the selected part.");
@@ -343,7 +346,10 @@ public final class MainFormController {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, confirmationMessage, ButtonType.YES, ButtonType.NO);
         alert.showAndWait().ifPresent(response -> {
-            if (response != ButtonType.YES) return;
+            if (response != ButtonType.YES) {
+                showErrorText("Product was not deleted.");
+                return;
+            }
 
             if (!Inventory.deleteProduct(selectedProduct)) {
                 showErrorText("There was an error deleting the product.");

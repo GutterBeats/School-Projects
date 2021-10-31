@@ -331,7 +331,10 @@ public class ProductDetailFormController {
 
         Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION, confirmationText, ButtonType.YES, ButtonType.NO);
         confirmation.showAndWait().ifPresent(response -> {
-            if (response != ButtonType.YES) return;
+            if (response != ButtonType.YES) {
+                showErrorText(selectedItem.getName() + " was not removed.");
+                return;
+            }
 
             productPartTableView.getItems().remove(selectedItem);
         });
