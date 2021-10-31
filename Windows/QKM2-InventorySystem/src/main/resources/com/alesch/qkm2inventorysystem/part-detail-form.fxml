@@ -98,7 +98,7 @@
       <HBox alignment="CENTER_RIGHT" spacing="25.0" HBox.hgrow="NEVER">
          <children>
               <Button mnemonicParsing="false" onAction="#saveButtonClicked" text="Save" />
-              <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelButtonClicked" text="Cancel" />
+              <Button mnemonicParsing="false" onAction="#cancelButtonClicked" text="Cancel" />
          </children>
       </HBox>
     </HBox>

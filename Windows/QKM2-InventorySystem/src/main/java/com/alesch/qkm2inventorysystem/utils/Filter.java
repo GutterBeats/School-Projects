@@ -9,8 +9,15 @@ import javafx.scene.control.TextFormatter;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
+/**
+ * Abstract class used to create filters to apply to TextFields.
+ */
 public abstract class Filter implements UnaryOperator<TextFormatter.Change> {
 
+    /**
+     * Pattern to use when filtering changes.
+     * @return regex pattern.
+     */
     protected abstract Pattern getFilterPattern();
 
     @Override

@@ -2,11 +2,7 @@ package com.alesch.qkm2inventorysystem.models;
 
 /**
  * Supplied class Part.java
- */
-
-/**
- *
- * @author Anthony Chavez
+ * Abstract class representing a Part.
  */
 public abstract class Part {
     private int id;

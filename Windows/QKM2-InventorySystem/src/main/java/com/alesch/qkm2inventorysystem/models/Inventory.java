@@ -9,6 +9,9 @@ import javafx.collections.ObservableList;
 
 import java.util.Locale;
 
+/**
+ * Static class representing the Inventory used by the program.
+ */
 public final class Inventory {
     private static final ObservableList<Part> allParts;
     private static final ObservableList<Product> allProducts;
@@ -17,6 +20,8 @@ public final class Inventory {
         allParts = FXCollections.observableArrayList();
         allProducts = FXCollections.observableArrayList();
     }
+
+    private Inventory() { }
 
     /**
      * Add a new part to the Inventory. Will exit early if new Part already exists in Inventory.

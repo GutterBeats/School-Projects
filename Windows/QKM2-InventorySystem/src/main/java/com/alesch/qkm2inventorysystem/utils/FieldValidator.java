@@ -9,9 +9,18 @@ import com.alesch.qkm2inventorysystem.models.Outsourced;
 import com.alesch.qkm2inventorysystem.models.Part;
 import com.alesch.qkm2inventorysystem.models.Product;
 
-public class FieldValidator {
+/**
+ * Static utility class used to help with field validation of Product & Part objects.
+ */
+public final class FieldValidator {
     private FieldValidator() {}
 
+    /**
+     * Used to validate the fields of a Product object.
+     *
+     * @param product the Product object to validate fields for.
+     * @return a String containing the first error encountered when validating.
+     */
     public static String validateProductFields(Product product) {
         if (product.getName().isBlank()) {
             return "Name cannot be blank.";
@@ -41,6 +50,15 @@ public class FieldValidator {
         return "";
     }
 
+    /**
+     * Used to validate the fields of a Part object; both InHouse and Outsourced.
+     *
+     * @param part the Part object to validate fields for.
+     *             Will check whether it is an InHouse or Outsource object and
+     *             validated accordingly.
+     *
+     * @return a String contain the first error encountered when validating.
+     */
     public static String validatePartFields(Part part) {
         if (part.getName().isBlank()) {
             return "Name cannot be blank.";

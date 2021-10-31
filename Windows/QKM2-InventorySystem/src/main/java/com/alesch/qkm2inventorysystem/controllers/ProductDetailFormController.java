@@ -22,70 +22,153 @@ import javafx.util.converter.IntegerStringConverter;
 
 import java.util.*;
 
+/**
+ * Controller for FXML form that allows for creation and
+ * editing of Product objects.
+ *
+ * FUTURE ENHANCEMENT: Could create a superclass
+ * that has common elements used across forms to
+ * cut down on code duplication.
+ *
+ * FUTURE ENHANCEMENT: Come up with better solution for
+ * validating the fields.
+ */
 public class ProductDetailFormController {
 
     //<editor-fold desc="Fields">
 
+    /**
+     * Used to determine whether this form is being used to edit an
+     * existing product or create a new one. Will be null if creating
+     * a new Product.
+     */
     private final Product existingProduct;
 
     //</editor-fold>
 
     //<editor-fold desc="FXML Controls">
 
+    /**
+     * A label for the title of the form.
+     */
     @FXML
     private Label titleLabel;
 
+    /**
+     * Text field used for the ID of the Product.
+     * Cannot be edited.
+     */
     @FXML
     private TextField idTextField;
 
+    /**
+     * Text field used for the Name of the Product.
+     */
     @FXML
     private TextField nameTextField;
 
+    /**
+     * Text field used for the Stock level of the Product.
+     * Will only allow Integer input.
+     */
     @FXML
     private TextField inventoryTextField;
 
+    /**
+     * Text field used for the Price of the Product.
+     * Will only allow Double input.
+     */
     @FXML
     private TextField priceTextField;
 
+    /**
+     * Text field used for the Maximum level
+     * of the Product. Will only allow Integer
+     * input.
+     */
     @FXML
     private TextField maximumTextField;
 
+    /**
+     * Text field used for the Minimum level
+     * of the Product. Will only allow Integer
+     * input.
+     */
     @FXML
     private TextField minimumTextField;
 
+    /**
+     * Text field used to search for available parts
+     * to add to the product.
+     */
     @FXML
     private TextField partSearchTextField;
 
+    /**
+     * Table view used to show the available parts
+     * to associate with a product.
+     */
     @FXML
     private TableView<Part> partTableView;
 
+    /**
+     * Part ID column in the Part Table View.
+     */
     @FXML
     private TableColumn partPartIdColumn;
 
+    /**
+     * Part Name column in the Part Table View.
+     */
     @FXML
     private TableColumn partPartNameColumn;
 
+    /**
+     * Part Inventory column in the Part Table View.
+     */
     @FXML
     private TableColumn partInventoryLevelColumn;
 
+    /**
+     * Part Price column in the Part Table View.
+     */
     @FXML
     private TableColumn partPriceColumn;
 
+    /**
+     * Label used to show errors encountered.
+     */
     @FXML
     private Label errorLabel;
 
+    /**
+     * Table view used to show the associated parts
+     * of the product.
+     */
     @FXML
     private TableView<Part> productPartTableView;
 
+    /**
+     * Part ID column in the Product Part Table View.
+     */
     @FXML
     private TableColumn productPartIdColumn;
 
+    /**
+     * Part Name column in the Product Part Table View.
+     */
     @FXML
     private TableColumn productPartNameColumn;
 
+    /**
+     * Part Inventory column in the Product Part Table View.
+     */
     @FXML
     private TableColumn productPartInventoryColumn;
 
+    /**
+     * Part Price column in the Product Part Table View.
+     */
     @FXML
     private TableColumn productPartPriceColumn;
 
@@ -93,14 +176,25 @@ public class ProductDetailFormController {
 
     //<editor-fold desc="Construction & Initialization">
 
+
+    /**
+     * Creates new ProductDetailFormController.
+     */
     public ProductDetailFormController() {
         this(-1);
     }
 
+    /**
+     * Creates new ProductDetailFormController and looks up by product Id.
+     * @param productId Id to use to initialize ProductDetailFormController.
+     */
     public ProductDetailFormController(int productId) {
         this.existingProduct = Inventory.lookupProduct(productId);
     }
 
+    /**
+     * Initializes FXML fields.
+     */
     public void initialize() {
         loadProductPartsTable(existingProduct);
         loadAllPartsTable();
@@ -116,6 +210,11 @@ public class ProductDetailFormController {
         minimumTextField.setText(String.valueOf(existingProduct.getMin()));
     }
 
+    /**
+     * Helper method to initialize the number fields with
+     * TextFormatter to limit input depending on what they're
+     * used for.
+     */
     private void initializeNumberFields() {
         inventoryTextField.setTextFormatter(new TextFormatter<>(new IntegerStringConverter(), 0, new IntegerFilter()));
         maximumTextField.setTextFormatter(new TextFormatter<>(new IntegerStringConverter(), 0, new IntegerFilter()));
@@ -123,6 +222,12 @@ public class ProductDetailFormController {
         priceTextField.setTextFormatter(new TextFormatter<>(new DoubleStringConverter(), 0.0, new DoubleFilter()));
     }
 
+    /**
+     * Helper method to load the All Parts table view with
+     * all available parts. Also sets up table columns and
+     * a placeholder label for when there are no parts
+     * available.
+     */
     private void loadAllPartsTable() {
         partPartIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         partPartNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -134,6 +239,13 @@ public class ProductDetailFormController {
         partTableView.setItems(Inventory.getAllParts());
     }
 
+    /**
+     * Helper method to load all of the associated parts of the product.
+     * Also sets up table columns and a placeholder label for when there
+     * are no parts to show.
+     *
+     * @param product the product to show the associated parts for.
+     */
     private void loadProductPartsTable(Product product) {
         productPartIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         productPartNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -158,6 +270,12 @@ public class ProductDetailFormController {
 
     //<editor-fold desc="FXML Event Handlers">
 
+    /**
+     * FXML event handler for the KeyTyped event on the partSearchTextField.
+     * Can be used to search by either part name or id.
+     *
+     * @param keyEvent Used to get the source of the event.
+     */
     @FXML
     private void partSearchTextField_KeyTyped(KeyEvent keyEvent) {
         Object source = keyEvent.getSource();
@@ -171,8 +289,13 @@ public class ProductDetailFormController {
         partTableView.setItems(items);
     }
 
+    /**
+     * FXML event handler for when the add part button is clicked.
+     * Validates the selected part then adds it to the list of
+     * associated part.
+     */
     @FXML
-    private void addPartButtonClicked(ActionEvent event) {
+    private void addPartButtonClicked() {
         var selectedItem = partTableView.getSelectionModel().getSelectedItem();
 
         if (selectedItem == null) {
@@ -183,8 +306,14 @@ public class ProductDetailFormController {
         productPartTableView.getItems().add(selectedItem);
     }
 
+    /**
+     * FXML event handler for when the remove associated part
+     * button is clicked. Will validate the selected part
+     * and show a confirmation dialog to confirm that you
+     * want to remove the part.
+     */
     @FXML
-    private void removeAssociatedPartButtonClicked(ActionEvent event) {
+    private void removeAssociatedPartButtonClicked() {
         if (productPartTableView.getItems().isEmpty()) {
             showErrorText("There are no parts to remove.");
             return;
@@ -208,27 +337,48 @@ public class ProductDetailFormController {
         });
     }
 
+    /**
+     * Handles event for when save button is clicked.
+     * Validates the fields used to set the properties on
+     * the product object. Will show an error if there are
+     * any issues. After validating, will save edits and
+     * close the window.
+     *
+     * @param event used to pass to the closeWindow() method.
+     */
     @FXML
     private void saveButtonClicked(ActionEvent event) {
         var validationResult = validateChanges();
-        if (!validationResult.isValid()) {
+        if (validationResult.isNotValid()) {
             showErrorText(validationResult.getErrorMessage());
             return;
         }
 
         saveChanges(validationResult.getValidatedObject());
-        exit(event);
+        closeWindow(event);
     }
 
+    /**
+     * Handles event for when the cancel button is clicked.
+     * Cancels any edits and closes the window.
+     *
+     * @param event used to pass to the closeWindow() method.
+     */
     @FXML
     private void cancelButtonClicked(ActionEvent event) {
-        exit(event);
+        closeWindow(event);
     }
 
     //</editor-fold>
 
     //<editor-fold desc="Helpers">
 
+    /**
+     * Utility method used to validate the fields for the
+     * product.
+     *
+     * @return a result object that contains the validated object or an error.
+     */
     private ValidationResult<Product> validateChanges() {
         Product newProduct = new Product(
             existingProduct != null ? existingProduct.getId() : getNextProductId(),
@@ -244,6 +394,12 @@ public class ProductDetailFormController {
         return new ValidationResult<>(result, newProduct);
     }
 
+    /**
+     * Saves the changes made to the new or existing Product
+     * object.
+     *
+     * @param newProduct the product object to save.
+     */
     private void saveChanges(Product newProduct) {
         if (existingProduct == null) {
             for (Part part : productPartTableView.getItems()) {
@@ -267,7 +423,13 @@ public class ProductDetailFormController {
         existingProduct.setStock(newProduct.getStock());
     }
 
-    private void exit(ActionEvent event) {
+    /**
+     * Closes the window.
+     *
+     * @param event used to get the source of the event
+     *              to use in closing the window.
+     */
+    private void closeWindow(ActionEvent event) {
         Object source = event.getSource();
         if (source.getClass() != Button.class) {
             return;
@@ -277,6 +439,16 @@ public class ProductDetailFormController {
         stage.close();
     }
 
+    /**
+     * Helper method for showing an error. Will show the error for five seconds, then clear it.
+     * <p>
+     *     RUNTIME ERROR: Exception was being thrown when trying to clear the error on the
+     *     TimerTask background thread. Solved by using Platform.runLater() to jump to the
+     *     UI thread before clearing the error.
+     * </p>
+     *
+     * @param message Message to show in the error label.
+     */
     private void showErrorText(String message) {
         errorLabel.setText(message);
 
@@ -288,6 +460,13 @@ public class ProductDetailFormController {
         }, 5000);
     }
 
+    /**
+     * Utility method used to get a random product id.
+     * Will check existing product id's to make sure there
+     * is not a duplicate.
+     *
+     * @return the next product id.
+     */
     private int getNextProductId() {
         Optional<Product> oldMax = Inventory.getAllProducts().stream().max(Comparator.comparingInt(Product::getId));
         Random random = new Random();

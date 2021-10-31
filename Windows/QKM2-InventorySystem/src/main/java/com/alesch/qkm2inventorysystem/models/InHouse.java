@@ -4,6 +4,9 @@
 
 package com.alesch.qkm2inventorysystem.models;
 
+/**
+ * Concrete class extending the abstract Part class. Represents an InHouse Part object type.
+ */
 public class InHouse extends Part {
     private int machineId;
 

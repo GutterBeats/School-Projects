@@ -4,6 +4,9 @@
 
 package com.alesch.qkm2inventorysystem.models;
 
+/**
+ * Concrete class extending the abstract Part class. Represents an Outsourced Part object type.
+ */
 public class Outsourced extends Part {
     private String companyName;
 
