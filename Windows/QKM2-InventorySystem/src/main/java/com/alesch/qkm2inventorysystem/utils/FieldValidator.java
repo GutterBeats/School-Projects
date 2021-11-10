@@ -10,7 +10,7 @@ import com.alesch.qkm2inventorysystem.models.Part;
 import com.alesch.qkm2inventorysystem.models.Product;
 
 /**
- * Static utility class used to help with field validation of Product & Part objects.
+ * Static utility class used to help with field validation of Product and Part objects.
  */
 public final class FieldValidator {
     private FieldValidator() {}
